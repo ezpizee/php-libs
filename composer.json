@@ -21,8 +21,6 @@
         "ezpizee/contextprocessor": "dev-master",
         "ezpizee/microservices-client": "dev-master",
         "ezpizee/utils": "dev-master",
-        "giggsey/libphonenumber-for-php": "8.12.7.1",
-        "giggsey/locale": "1.9",
         "lcobucci/jwt": "^3.4",
         "webconsol/handlebars.php": "dev-master",
         "webconsol/php-hbs-helpers": "dev-master",
