@@ -21,7 +21,6 @@
         "ezpizee/contextprocessor": "dev-master",
         "ezpizee/microservices-client": "dev-master",
         "ezpizee/utils": "dev-master",
-        "lcobucci/jwt": "^3.4",
         "webconsol/handlebars.php": "dev-master",
         "webconsol/php-hbs-helpers": "dev-master",
         "mashape/unirest-php": "^3.0"
