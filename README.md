@@ -30,10 +30,11 @@ php composer.phar install
 
 - Kong's PHP Unirest https://github.com/Kong/unirest-php
 
-**Usuage**
+**The usuage**
 
 This library will be used for all integration of Ezpizee with third party 
 platforms and applications, including but not limited to CMS:
 
-- Drupal 8.x & 9.x https://www.drupal.org
-- WordPress 4.x http://www.wordpress.org
+- [Drupal 8.x & 9.x](https://www.drupal.org)  in [Ezpizee Drupal Connector](https://github.com/ezpizee/DrupalConnector)
+
+- [WordPress 4.x](http://www.wordpress.org) in [Ezpizee WordPress Connector](https://github.com/ezpizee/WordPressConnector)
