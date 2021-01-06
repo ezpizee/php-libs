@@ -40,3 +40,9 @@ platforms and applications, including but not limited to CMS:
 - [WordPress 4.x](http://www.wordpress.org) in [Ezpizee WordPress Connector](https://github.com/ezpizee/WordPressConnector)
 
 - [Joomla! 3.x](http://www.joomla.org) in [Ezpizee Joomla Connector](https://github.com/ezpizee/JoomlaConnector)
+
+**How to use**
+
+- Develop on the **src** folder
+
+- Move or copy the release or distributed version to the **dist** folder
