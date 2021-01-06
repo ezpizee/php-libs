@@ -30,7 +30,7 @@ php composer.phar install
 
 - Kong's PHP Unirest https://github.com/Kong/unirest-php
 
-**The usuage**
+**Used by**
 
 This library will be used for all integration of Ezpizee with third party 
 platforms and applications, including but not limited to CMS:
