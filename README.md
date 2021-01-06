@@ -29,3 +29,11 @@ php composer.phar install
 - WEBCONSOL Handlebars Helpers https://github.com/WEBCONSOL/php-hbs-helpers
 
 - Kong's PHP Unirest https://github.com/Kong/unirest-php
+
+**Usuage**
+
+This library will be used for all integration of Ezpizee with third party 
+platforms and applications, including but not limited to CMS:
+
+- Drupal 8.x & 9.x https://www.drupal.org
+- WordPress 4.x http://www.wordpress.org
