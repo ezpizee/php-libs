@@ -1,0 +1,21 @@
+{
+  "name": "ezpizee/php-libs",
+  "description": "PHP utility classes for Ezpizee's PHP connectors",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/ezpizee/php-libs",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Pang Khon",
+      "email": "khon.pang@ezpizee.com"
+    },
+    {
+      "name": "Sothea Nim",
+      "email": "sothea.nim@ezpizee.com.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  }
+}
