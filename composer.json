@@ -1,7 +1,7 @@
 {
     "name": "ezpizee/php-libs",
     "description": "PHP utility classes for Ezpizee's PHP connectors",
-    "type": "project",
+    "type": "library",
     "license": "GPL-2.0-or-later",
     "homepage": "https://github.com/ezpizee/php-libs",
     "minimum-stability": "dev",
@@ -13,12 +13,6 @@
         {
             "name": "Sothea Nim",
             "email": "sothea.nim@ezpizee.com.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packagist.org/packages/ezpizee/php-libs"
         }
     ],
     "require": {

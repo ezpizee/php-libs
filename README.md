@@ -3,11 +3,11 @@
 https://github.com/ezpizee/php-libs
 
 ```
-composer require ezpizee/php-libs
+composer install
 ```
 
 OR
 
 ```
-php composer.phar require ezpizee/php-libs
+php composer.phar install
 ```
