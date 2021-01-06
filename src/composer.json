@@ -23,6 +23,7 @@
         "ezpizee/utils": "dev-master",
         "webconsol/handlebars.php": "dev-master",
         "webconsol/php-hbs-helpers": "dev-master",
-        "mashape/unirest-php": "^3.0"
+        "mashape/unirest-php": "^3.0",
+        "lcobucci/jwt": "^3.4"
     }
 }
