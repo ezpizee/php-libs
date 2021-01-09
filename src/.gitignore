@@ -86,11 +86,7 @@ id_rsa
 id_rsa.pub
 
 /vendor
-static/assets
-!static/assets/logs/index.html
-!static/assets/.htaccess
-!static/assets/404.html
-!static/assets/index.html
+!/vendor/masterminds
 
 composer.lock
 
