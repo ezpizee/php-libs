@@ -19,26 +19,23 @@
 namespace HandlebarsHelpers;
 
 use Handlebars\Context;
+use Handlebars\Helper;
 use Handlebars\StringWrapper;
 use Handlebars\Template;
 use HandlebarsHelpers\Exception\Error;
 
-class IncludeHelper extends RequireHelper
+class ResourceHelper implements Helper
 {
     public function execute(Template $template, Context $context, $args, $source)
     {
         $parsedArgs = $template->parseArguments($args);
-        if (sizeof($parsedArgs) > 0) {
-            $path = Hbs::getTmplDir().DIRECTORY_SEPARATOR.$parsedArgs[0];
-            $model = [];
-            $currentPage = $context->get('currentPage');
-            if (!empty($currentPage)) {
-                $model = ['currentPage' => $currentPage];
-            }
-            $properties = $context->get('properties');
-            if (!empty($properties)) {
-                $model['properties'] = $properties;
-            }
+        if (!isset($parsedArgs[1])) {
+            $parsedArgs[1] = 'properties';
+        }
+        if (sizeof($parsedArgs) === 2) {
+            $path = Hbs::absPartialPath($parsedArgs[0]);
+            $model = Hbs::getModel($parsedArgs[0], $parsedArgs[1]);
+            $model = array_merge($model, Hbs::getGlobalContext());
             return new StringWrapper(Hbs::render($path, $model, Hbs::getTmplDir()));
         }
         return new Error(self::class . ' requires 2 arguments, '.sizeof($parsedArgs).' was provided');

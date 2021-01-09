@@ -19,27 +19,34 @@
 namespace HandlebarsHelpers;
 
 use Handlebars\Context;
+use Handlebars\Helper;
 use Handlebars\StringWrapper;
 use Handlebars\Template;
 use HandlebarsHelpers\Exception\Error;
+use HandlebarsHelpers\Utils\ClientlibManager;
 
-class IncludeHelper extends RequireHelper
+class ClientlibHelper implements Helper
 {
     public function execute(Template $template, Context $context, $args, $source)
     {
         $parsedArgs = $template->parseArguments($args);
-        if (sizeof($parsedArgs) > 0) {
-            $path = Hbs::getTmplDir().DIRECTORY_SEPARATOR.$parsedArgs[0];
-            $model = [];
-            $currentPage = $context->get('currentPage');
-            if (!empty($currentPage)) {
-                $model = ['currentPage' => $currentPage];
+
+        if (sizeof($parsedArgs) === 2) {
+            $type = $parsedArgs[1];
+            $libs = json_decode($parsedArgs[0], true);
+            $output = [($type === 'css' ? '<style type="text/css">' : '<script type="text/javascript">')];
+            if (!empty($libs)) {
+                foreach ($libs as $lib) {
+                    $root = Hbs::getTmplDir();
+                    $q = $lib.'.'.$type;
+                    $clientLib = new ClientlibManager($root, $q);
+                    if (!empty($clientLib->getContent())) {
+                        $output[] = $clientLib->getContent();
+                    }
+                }
             }
-            $properties = $context->get('properties');
-            if (!empty($properties)) {
-                $model['properties'] = $properties;
-            }
-            return new StringWrapper(Hbs::render($path, $model, Hbs::getTmplDir()));
+            $output[] = $type === 'css' ? '</style>' : '</script>';
+            return new StringWrapper(sizeof($output) > 2 ? implode('', $output) : '');
         }
         return new Error(self::class . ' requires 2 arguments, '.sizeof($parsedArgs).' was provided');
     }
