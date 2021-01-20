@@ -11,7 +11,6 @@ use HandlebarsHelpers\Hbs;
 use HandlebarsHelpers\Utils\ClientlibManager;
 use HandlebarsHelpers\Utils\Comparator;
 use HandlebarsHelpers\Utils\Context;
-use HandlebarsHelpers\Utils\Debugger;
 use HandlebarsHelpers\Utils\DOMQuery;
 use HandlebarsHelpers\Utils\Html;
 use HandlebarsHelpers\Utils\HTML5;
@@ -31,15 +30,12 @@ class GX2CMS extends Processor
     ];
     private $numExecuted = 0;
     private $maxExec = 10;
-    private $tmpl = '';
-    private $context = [];
 
     public function process(string &$tmpl, array $context)
     : void
     {
         $this->context = $context;
         $this->tmpl = $tmpl;
-        $this->preProcessingFormat();
         $this->processSlyDOM();
         $this->changeToken();
         self::processAssetTag($this->tmpl, $this->context);
@@ -52,6 +48,7 @@ class GX2CMS extends Processor
     private function processSlyDOM()
     : void
     {
+        $this->preProcessingFormat();
         $html5 = new HTML5();
         if (Html::hasHead($this->tmpl)) {
             if ($this->numExecuted === 0) {
@@ -336,6 +333,7 @@ class GX2CMS extends Processor
     private function preProcessingFormat()
     : void
     {
+        $this->ignore();
         $pattern = '/<sly([^\=]*)data-sly-use\.(.[^\=]*)\=(.[^\>]*)\>/';
         $matches = PregUtil::getMatches($pattern, $this->tmpl);
         if (!empty($matches)) {
@@ -356,6 +354,7 @@ class GX2CMS extends Processor
             ['<sly ', '</sly>', '>', '<', '', ''],
             $this->tmpl
         );
+        $this->ignore();
     }
 
     private function removeToken(string $text)
