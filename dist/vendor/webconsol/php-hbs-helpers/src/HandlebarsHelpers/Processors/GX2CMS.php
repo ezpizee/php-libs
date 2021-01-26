@@ -266,10 +266,19 @@ class GX2CMS extends Processor
     : void
     {
         if (!empty($dom)) {
-            $resourceValue = $attr->value;
-            $dataModel = $dom->hasAttribute('data-model') ? "'".$dom->getAttribute('data-model')."'" : '';
-            $source = Hbs::HBS_TOKENS[0].'#resource '.$this->removeToken($resourceValue).
-                ($dataModel?' '.$dataModel:'').Hbs::HBS_TOKENS[1];
+            $resourceValue = $this->removeToken($attr->value);
+            $dataModel = $dom->hasAttribute('data-model') ? $dom->getAttribute('data-model') : 'properties';
+            $exp = explode('@', $resourceValue);
+            if (sizeof($exp) === 2) {
+                $resourceNodePath = trim($exp[0]);
+                $resourceType = str_replace(['resourceType=', "'", '"'], '', trim($exp[1]));
+                $resourceValue = ['nodePath'=>$resourceNodePath, 'resourceType'=>$resourceType, 'model'=>$dataModel];
+            }
+            else {
+                $resourceValue = ['nodePath'=>'', 'resourceType'=>str_replace("'", '', $resourceValue), 'model'=>$dataModel];
+            }
+            $source = Hbs::HBS_TOKENS[0].'#resource \''.base64_encode(json_encode($resourceValue)).'\''.Hbs::HBS_TOKENS[1];
+//            die($source);
             $ele = $dom->parentNode->ownerDocument->createElement('gx2cms', $source);
             $dom->parentNode->replaceChild($ele, $dom);
             //DOMQuery::replaceDOMElementWithDOMText($dom->parentNode, $dom, $source);
