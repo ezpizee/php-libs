@@ -35,7 +35,7 @@ class IncludeHelper extends RequireHelper
             $path = Hbs::getTmplDir().DIRECTORY_SEPARATOR.$parsedArgs[0];
             if (!file_exists($path)) {
                 $global = Hbs::getGlobalContextParam('global');
-                if ($global !== null && isset($global['pathMapping'])) {
+                if ($global !== null && isset($global['resourcePathMapping'])) {
                     $resourcePathMapping = $global['resourcePathMapping'];
                     $path = StringUtil::removeDoubleSlashes(
                         str_replace(array_keys($resourcePathMapping), array_values($resourcePathMapping), $path)

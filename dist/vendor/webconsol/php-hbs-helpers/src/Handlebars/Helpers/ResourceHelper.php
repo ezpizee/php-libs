@@ -56,7 +56,7 @@ class ResourceHelper implements Helper
         $path = Hbs::absPartialPath($resourceType);
         if (!file_exists($path)) {
             $global = Hbs::getGlobalContextParam('global');
-            if ($global !== null && isset($global['pathMapping'])) {
+            if ($global !== null && isset($global['resourcePathMapping'])) {
                 $resourcePathMapping = $global['resourcePathMapping'];
                 $path = StringUtil::removeDoubleSlashes(
                     str_replace(array_keys($resourcePathMapping), array_values($resourcePathMapping), $path)
