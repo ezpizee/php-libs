@@ -3,6 +3,7 @@
 namespace Handlebars\Processors;
 
 use Handlebars\Engine\Hbs;
+use Handlebars\Utils\Debugger;
 use Handlebars\Utils\PathUtil;
 use Handlebars\Utils\PregUtil;
 use Handlebars\Utils\StringUtil;
@@ -85,13 +86,10 @@ class Processor
                     StringUtil::startsWith($match[$key], "data:") === false &&
                     StringUtil::startsWith($match[$key], $renderPage) === false
                 ) {
-                    $replace = str_replace(
-                        implode('', [$match[3],'=',$match[4],$match[$key],$match[6]]),
-                         implode('', [$match[3],'=',$match[4],$renderPage.'&'.$match[9].'Path='.$match[$key],$match[6]]),
-                        $match[0]
-                    );
+                    $pattern = implode('', [$match[3],'=',$match[4],$match[$key],$match[6]]);
+                    $replace = implode('', [$match[3],'=',$match[4],$renderPage.'&'.$match[9].'Path='.$match[$key],$match[6]]);
                     $tmpl = str_replace(
-                        [$match[0], ' data-render-asset='.$match[8].$match[9].$match[10]],
+                        [$pattern, ' data-render-asset='.$match[8].$match[9].$match[10]],
                         [$replace, ''],
                         $tmpl
                     );
