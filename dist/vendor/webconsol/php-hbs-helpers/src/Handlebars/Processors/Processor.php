@@ -3,7 +3,6 @@
 namespace Handlebars\Processors;
 
 use Handlebars\Engine\Hbs;
-use Handlebars\Utils\Debugger;
 use Handlebars\Utils\PathUtil;
 use Handlebars\Utils\PregUtil;
 use Handlebars\Utils\StringUtil;
