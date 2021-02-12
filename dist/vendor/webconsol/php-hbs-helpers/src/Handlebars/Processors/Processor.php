@@ -60,9 +60,11 @@ class Processor
                     StringUtil::startsWith($match[$key], "data:") === false &&
                     StringUtil::startsWith($match[$key], $renderPage) === false
                 ) {
+                    $clientLibRoot = (isset($context['clientlibRoot']) ? $context['clientlibRoot'] : '').'/';
+                    $imagePath = str_replace('../', $clientLibRoot, $match[$key]);
                     $tmpl = str_replace(
                         $match[$key],
-                        $renderPage.'&imagePath='.$match[$key],
+                        $renderPage.'&imagePath='.$imagePath,
                         $tmpl
                     );
                 }
