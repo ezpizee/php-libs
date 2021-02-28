@@ -90,6 +90,18 @@ class ComposerStaticInit71437e9a752949ff232404692d8051c5
             array (
                 0 => __DIR__ . '/..' . '/ezpizee/utils/src',
             ),
+            'Ezpizee\\SupportedCMS\\WordPress' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezpizee/supported-cms/src',
+            ),
+            'Ezpizee\\SupportedCMS\\Joomla' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezpizee/supported-cms/src',
+            ),
+            'Ezpizee\\SupportedCMS\\Drupal' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezpizee/supported-cms/src',
+            ),
             'Ezpizee\\MicroservicesClient' => 
             array (
                 0 => __DIR__ . '/..' . '/ezpizee/microservices-client/src',

@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'c0ad26a6780f1d2246a69dcbafa56b26b646a1ad',
+    'reference' => '9a0503c2366c18874811447e4cac673caa22db7b',
     'name' => 'ezpizee/php-libs',
   ),
   'versions' => 
@@ -48,7 +48,17 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'c0ad26a6780f1d2246a69dcbafa56b26b646a1ad',
+      'reference' => '9a0503c2366c18874811447e4cac673caa22db7b',
+    ),
+    'ezpizee/supported-cms' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+        0 => '9999999-dev',
+      ),
+      'reference' => '8b6bb17b879d855460ac44b7ca5109793abbcd2e',
     ),
     'ezpizee/utils' => 
     array (

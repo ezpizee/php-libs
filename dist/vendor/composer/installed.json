@@ -153,6 +153,59 @@
             "install-path": "../ezpizee/microservices-client"
         },
         {
+            "name": "ezpizee/supported-cms",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezpizee/supported-cms.git",
+                "reference": "8b6bb17b879d855460ac44b7ca5109793abbcd2e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezpizee/supported-cms/zipball/8b6bb17b879d855460ac44b7ca5109793abbcd2e",
+                "reference": "8b6bb17b879d855460ac44b7ca5109793abbcd2e",
+                "shasum": ""
+            },
+            "require": {
+                "ezpizee/microservices-client": "dev-master",
+                "ezpizee/utils": "dev-master",
+                "php": ">=7.1"
+            },
+            "time": "2021-02-28T08:51:47+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Ezpizee\\SupportedCMS\\Drupal": "src/",
+                    "Ezpizee\\SupportedCMS\\Joomla": "src/",
+                    "Ezpizee\\SupportedCMS\\WordPress": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pang Khon",
+                    "email": "khon.pang@ezpizee.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com.com"
+                }
+            ],
+            "description": "PHP Supported CMS Libraries",
+            "homepage": "https://github.com/ezpizee/supported-cms",
+            "support": {
+                "issues": "https://github.com/ezpizee/supported-cms/issues",
+                "source": "https://github.com/ezpizee/supported-cms/tree/master"
+            },
+            "install-path": "../ezpizee/supported-cms"
+        },
+        {
             "name": "ezpizee/utils",
             "version": "dev-master",
             "version_normalized": "dev-master",
