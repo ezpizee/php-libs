@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezpizee/PHPConnectorUtils.git",
-                "reference": "cc3c6bfa35ae4b2e310a616958d3a5de85583e07"
+                "reference": "d34d0dcc24202e47e814b298ccc4b713103fb1a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezpizee/PHPConnectorUtils/zipball/cc3c6bfa35ae4b2e310a616958d3a5de85583e07",
-                "reference": "cc3c6bfa35ae4b2e310a616958d3a5de85583e07",
+                "url": "https://api.github.com/repos/ezpizee/PHPConnectorUtils/zipball/d34d0dcc24202e47e814b298ccc4b713103fb1a8",
+                "reference": "d34d0dcc24202e47e814b298ccc4b713103fb1a8",
                 "shasum": ""
             },
             "require": {
@@ -20,7 +20,7 @@
                 "ezpizee/utils": "dev-master",
                 "php": ">=7.1"
             },
-            "time": "2021-01-06T15:57:45+00:00",
+            "time": "2021-02-26T07:46:20+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "source",
@@ -58,19 +58,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezpizee/PHPBaseContextProcessor.git",
-                "reference": "fdc7ff766e30588f288be4b950560a6c5188247f"
+                "reference": "d90fc24467c3955132dbd1c1722c7164fe4592b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezpizee/PHPBaseContextProcessor/zipball/fdc7ff766e30588f288be4b950560a6c5188247f",
-                "reference": "fdc7ff766e30588f288be4b950560a6c5188247f",
+                "url": "https://api.github.com/repos/ezpizee/PHPBaseContextProcessor/zipball/d90fc24467c3955132dbd1c1722c7164fe4592b5",
+                "reference": "d90fc24467c3955132dbd1c1722c7164fe4592b5",
                 "shasum": ""
             },
             "require": {
                 "ezpizee/utils": "dev-master",
                 "php": ">=7.1"
             },
-            "time": "2021-02-04T03:08:23+00:00",
+            "time": "2021-02-25T10:38:34+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "source",
@@ -159,12 +159,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezpizee/supported-cms.git",
-                "reference": "8b6bb17b879d855460ac44b7ca5109793abbcd2e"
+                "reference": "4f554a839576edd3e83cf97a89adda5a35833a72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezpizee/supported-cms/zipball/8b6bb17b879d855460ac44b7ca5109793abbcd2e",
-                "reference": "8b6bb17b879d855460ac44b7ca5109793abbcd2e",
+                "url": "https://api.github.com/repos/ezpizee/supported-cms/zipball/4f554a839576edd3e83cf97a89adda5a35833a72",
+                "reference": "4f554a839576edd3e83cf97a89adda5a35833a72",
                 "shasum": ""
             },
             "require": {
@@ -172,13 +172,14 @@
                 "ezpizee/utils": "dev-master",
                 "php": ">=7.1"
             },
-            "time": "2021-02-28T08:51:47+00:00",
+            "time": "2021-02-28T09:16:54+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Ezpizee\\SupportedCMS\\Drupal": "src/",
+                    "Ezpizee\\SupportedCMS\\Exception": "src/",
                     "Ezpizee\\SupportedCMS\\Joomla": "src/",
                     "Ezpizee\\SupportedCMS\\WordPress": "src/"
                 }
@@ -212,18 +213,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezpizee/microservices-utils.git",
-                "reference": "b831eced97590bf111bf77d17887d7c18d2c81c7"
+                "reference": "43d8310e9dc14c08b9dff2f860863451b1c5f022"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezpizee/microservices-utils/zipball/b831eced97590bf111bf77d17887d7c18d2c81c7",
-                "reference": "b831eced97590bf111bf77d17887d7c18d2c81c7",
+                "url": "https://api.github.com/repos/ezpizee/microservices-utils/zipball/43d8310e9dc14c08b9dff2f860863451b1c5f022",
+                "reference": "43d8310e9dc14c08b9dff2f860863451b1c5f022",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
             },
-            "time": "2021-02-04T03:09:26+00:00",
+            "time": "2021-02-10T09:33:09+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "source",
@@ -310,12 +311,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9"
+                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
-                "reference": "cd83b5421df3dbbbc66bd07a5b970c9efb6371b9",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/511629a54465e89a31d3d7e4cf0935feab8b14c1",
+                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1",
                 "shasum": ""
             },
             "require": {
@@ -333,7 +334,7 @@
             "suggest": {
                 "lcobucci/clock": "*"
             },
-            "time": "2021-01-27T23:38:30+00:00",
+            "time": "2021-02-16T09:40:01+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -571,18 +572,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WEBCONSOL/php-hbs-helpers.git",
-                "reference": "7bb971c5dbec1d8a33510edf2a17fce39b4aa946"
+                "reference": "0d16ca05341c9bd0fc94983df0cee629127d877f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WEBCONSOL/php-hbs-helpers/zipball/7bb971c5dbec1d8a33510edf2a17fce39b4aa946",
-                "reference": "7bb971c5dbec1d8a33510edf2a17fce39b4aa946",
+                "url": "https://api.github.com/repos/WEBCONSOL/php-hbs-helpers/zipball/0d16ca05341c9bd0fc94983df0cee629127d877f",
+                "reference": "0d16ca05341c9bd0fc94983df0cee629127d877f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
             },
-            "time": "2021-01-29T02:32:30+00:00",
+            "time": "2021-02-12T13:04:30+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "source",

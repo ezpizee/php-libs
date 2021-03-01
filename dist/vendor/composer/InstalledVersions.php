@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '9a0503c2366c18874811447e4cac673caa22db7b',
+    'reference' => '1c84dc8878c109eeca25f9c215c39197cd88c48a',
     'name' => 'ezpizee/php-libs',
   ),
   'versions' => 
@@ -43,7 +43,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => 'cc3c6bfa35ae4b2e310a616958d3a5de85583e07',
+      'reference' => 'd34d0dcc24202e47e814b298ccc4b713103fb1a8',
     ),
     'ezpizee/contextprocessor' => 
     array (
@@ -53,7 +53,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => 'fdc7ff766e30588f288be4b950560a6c5188247f',
+      'reference' => 'd90fc24467c3955132dbd1c1722c7164fe4592b5',
     ),
     'ezpizee/microservices-client' => 
     array (
@@ -72,7 +72,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '9a0503c2366c18874811447e4cac673caa22db7b',
+      'reference' => '1c84dc8878c109eeca25f9c215c39197cd88c48a',
     ),
     'ezpizee/supported-cms' => 
     array (
@@ -82,7 +82,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '8b6bb17b879d855460ac44b7ca5109793abbcd2e',
+      'reference' => '4f554a839576edd3e83cf97a89adda5a35833a72',
     ),
     'ezpizee/utils' => 
     array (
@@ -92,7 +92,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => 'b831eced97590bf111bf77d17887d7c18d2c81c7',
+      'reference' => '43d8310e9dc14c08b9dff2f860863451b1c5f022',
     ),
     'gx2cms/project' => 
     array (
@@ -111,7 +111,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'cd83b5421df3dbbbc66bd07a5b970c9efb6371b9',
+      'reference' => '511629a54465e89a31d3d7e4cf0935feab8b14c1',
     ),
     'mashape/unirest-php' => 
     array (
@@ -149,7 +149,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '7bb971c5dbec1d8a33510edf2a17fce39b4aa946',
+      'reference' => '0d16ca05341c9bd0fc94983df0cee629127d877f',
     ),
   ),
 );

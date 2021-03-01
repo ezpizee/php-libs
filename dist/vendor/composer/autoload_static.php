@@ -98,6 +98,10 @@ class ComposerStaticInit71437e9a752949ff232404692d8051c5
             array (
                 0 => __DIR__ . '/..' . '/ezpizee/supported-cms/src',
             ),
+            'Ezpizee\\SupportedCMS\\Exception' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezpizee/supported-cms/src',
+            ),
             'Ezpizee\\SupportedCMS\\Drupal' => 
             array (
                 0 => __DIR__ . '/..' . '/ezpizee/supported-cms/src',

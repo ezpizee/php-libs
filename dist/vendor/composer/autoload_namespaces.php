@@ -19,6 +19,7 @@ return array(
     'Ezpizee\\Utils' => array($vendorDir . '/ezpizee/utils/src'),
     'Ezpizee\\SupportedCMS\\WordPress' => array($vendorDir . '/ezpizee/supported-cms/src'),
     'Ezpizee\\SupportedCMS\\Joomla' => array($vendorDir . '/ezpizee/supported-cms/src'),
+    'Ezpizee\\SupportedCMS\\Exception' => array($vendorDir . '/ezpizee/supported-cms/src'),
     'Ezpizee\\SupportedCMS\\Drupal' => array($vendorDir . '/ezpizee/supported-cms/src'),
     'Ezpizee\\MicroservicesClient' => array($vendorDir . '/ezpizee/microservices-client/src'),
     'Ezpizee\\ContextProcessor' => array($vendorDir . '/ezpizee/contextprocessor/src'),
