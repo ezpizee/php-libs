@@ -258,17 +258,7 @@ class QueryKeyValuePairs implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return [
-            'tableFields'=>$this->tableFields,
-            'fields'=>$this->fields,
-            'values'=>$this->values,
-            'primaryKeys'=>$this->primaryKeys,
-            'primaryKeysValues'=>$this->primaryKeysValues,
-            'condition'=>$this->condition,
-            'existentCondition'=>$this->existentCondition,
-            'multiInsertFieldValues'=>$this->multiInsertFieldValues,
-            'omitSqlQuoteValues'=>$this->omitSqlQuoteValues
-        ];
+        return ['fields'=>$this->fields, 'values'=>$this->values, 'tableFields'=>$this->tableFields];
     }
 
     public function __toString()
