@@ -1,5 +1,4 @@
 ~
-static/adminui
 
 node_modules
 .idea
@@ -61,41 +60,25 @@ target
 ## intellij idea
 *.iml
 .idea/
-
 .brackets.json
-#lazybone file
 *.lazybones
-node_modules
-
-config/settings.php
-logs
-
-tmp
-!tmp/logs/index.html
-!tmp/php/opcache/index.html
-!tmp/php/session/index.html
-!tmp/php/wsdlcache/index.html
-!tmp/postman/Ezpizee API.postman_collection.json
-!tmp/sqldump/*.sql
-!tmp/sqldump/*/*.sql
-
-cache
-!cache/index.html
-
 id_rsa
 id_rsa.pub
 
+/composer.lock
 /vendor
-static/assets
-!static/assets/logs/index.html
-!static/assets/.htaccess
-!static/assets/404.html
-!static/assets/index.html
 
-composer.lock
+/src/composer.lock
+/src/vendor
+!/src/vendor/bin
+!/src/vendor/masterminds
 
-# temporary block Phinx
-db/*
-phinx.yml
-test.php
-lamp-config
+/dist/.gitignore
+/dist/*/.git
+/dist/*/*/.git
+/dist/*/*/*/.git
+/dist/*/*/*/*/.git
+/dist/*/.gitignore
+/dist/*/*/.gitignore
+/dist/*/*/*/.gitignore
+/dist/*/*/*/*/.gitignore

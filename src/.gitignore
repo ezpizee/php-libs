@@ -63,35 +63,7 @@ target
 .idea/
 
 .brackets.json
-#lazybone file
 *.lazybones
-node_modules
-
-config/settings.php
 logs
-
-tmp
-!tmp/logs/index.html
-!tmp/php/opcache/index.html
-!tmp/php/session/index.html
-!tmp/php/wsdlcache/index.html
-!tmp/postman/Ezpizee API.postman_collection.json
-!tmp/sqldump/*.sql
-!tmp/sqldump/*/*.sql
-
-cache
-!cache/index.html
-
 id_rsa
 id_rsa.pub
-
-/vendor
-!/vendor/masterminds
-
-composer.lock
-
-# temporary block Phinx
-db/*
-phinx.yml
-test.php
-lamp-config

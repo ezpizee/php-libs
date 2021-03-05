@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '1c84dc8878c109eeca25f9c215c39197cd88c48a',
+    'reference' => '0e06e3509eac3d9d4f030bae0a7fefba1d9bcf6a',
     'name' => 'ezpizee/php-libs',
   ),
   'versions' => 
@@ -53,7 +53,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => 'd90fc24467c3955132dbd1c1722c7164fe4592b5',
+      'reference' => '99a37a3ea8ca2e3bffe43ef8c9581e19584788f1',
     ),
     'ezpizee/microservices-client' => 
     array (
@@ -72,7 +72,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '1c84dc8878c109eeca25f9c215c39197cd88c48a',
+      'reference' => '0e06e3509eac3d9d4f030bae0a7fefba1d9bcf6a',
     ),
     'ezpizee/supported-cms' => 
     array (
@@ -92,7 +92,7 @@ private static $installed = array (
       array (
         0 => '9999999-dev',
       ),
-      'reference' => '43d8310e9dc14c08b9dff2f860863451b1c5f022',
+      'reference' => '358c9d9adbbd82eeec29b0d34e838098ccdda4a4',
     ),
     'gx2cms/project' => 
     array (
@@ -130,6 +130,41 @@ private static $installed = array (
       array (
       ),
       'reference' => 'cadcfaaa13153e0e8eb92c49a53e140cf1a85dea',
+    ),
+    'sendgrid/php-http-client' => 
+    array (
+      'pretty_version' => '3.13.0',
+      'version' => '3.13.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '35862113b879274c7014e09681ac279a186665f1',
+    ),
+    'sendgrid/sendgrid' => 
+    array (
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
+      'aliases' => 
+      array (
+        0 => '9999999-dev',
+      ),
+      'reference' => 'ab0023a6233f39e408b5eb8c4299f20790f5f5a7',
+    ),
+    'sendgrid/sendgrid-php' => 
+    array (
+      'replaced' => 
+      array (
+        0 => '*',
+      ),
+    ),
+    'starkbank/ecdsa' => 
+    array (
+      'pretty_version' => '0.0.4',
+      'version' => '0.0.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9369d35ed9019321adb4eb9fd3be21357d527c74',
     ),
     'webconsol/handlebars.php' => 
     array (

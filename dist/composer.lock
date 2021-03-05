@@ -1,0 +1,792 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "14ad04868f39c030d17117b01aa8f042",
+    "packages": [
+        {
+            "name": "ezpizee/connector-utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezpizee/PHPConnectorUtils.git",
+                "reference": "d34d0dcc24202e47e814b298ccc4b713103fb1a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezpizee/PHPConnectorUtils/zipball/d34d0dcc24202e47e814b298ccc4b713103fb1a8",
+                "reference": "d34d0dcc24202e47e814b298ccc4b713103fb1a8",
+                "shasum": ""
+            },
+            "require": {
+                "ezpizee/microservices-client": "dev-master",
+                "ezpizee/utils": "dev-master",
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ezpizee\\ConnectorUtils": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pang Khon",
+                    "email": "khon.pang@ezpizee.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com.com"
+                }
+            ],
+            "description": "PHP utility classes for Ezpizee's PHP connectors",
+            "homepage": "https://github.com/ezpizee/PHPConnectorUtils",
+            "support": {
+                "issues": "https://github.com/ezpizee/PHPConnectorUtils/issues",
+                "source": "https://github.com/ezpizee/PHPConnectorUtils/tree/master"
+            },
+            "time": "2021-02-26T07:46:20+00:00"
+        },
+        {
+            "name": "ezpizee/contextprocessor",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezpizee/PHPBaseContextProcessor.git",
+                "reference": "99a37a3ea8ca2e3bffe43ef8c9581e19584788f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezpizee/PHPBaseContextProcessor/zipball/99a37a3ea8ca2e3bffe43ef8c9581e19584788f1",
+                "reference": "99a37a3ea8ca2e3bffe43ef8c9581e19584788f1",
+                "shasum": ""
+            },
+            "require": {
+                "ezpizee/utils": "dev-master",
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ezpizee\\ContextProcessor": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pang Khon",
+                    "email": "khon.pang@ezpizee.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com.com"
+                }
+            ],
+            "description": "For Ezpizee's Base PHP Context Processor",
+            "homepage": "https://github.com/ezpizee/PHPBaseContextProcessor",
+            "support": {
+                "issues": "https://github.com/ezpizee/PHPBaseContextProcessor/issues",
+                "source": "https://github.com/ezpizee/PHPBaseContextProcessor/tree/master"
+            },
+            "time": "2021-02-28T13:19:06+00:00"
+        },
+        {
+            "name": "ezpizee/microservices-client",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezpizee/microservices-client.git",
+                "reference": "44c071ac9f8a2a128e23f99d6e7f6793561f63e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezpizee/microservices-client/zipball/44c071ac9f8a2a128e23f99d6e7f6793561f63e5",
+                "reference": "44c071ac9f8a2a128e23f99d6e7f6793561f63e5",
+                "shasum": ""
+            },
+            "require": {
+                "ezpizee/utils": "dev-master",
+                "mashape/unirest-php": "^3.0",
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ezpizee\\MicroservicesClient": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pang Khon",
+                    "email": "pang.khon@ezpizee.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com.com"
+                }
+            ],
+            "description": "For connecting to our microservices (likely using Kong's unirest)",
+            "homepage": "https://github.com/ezpizee/microservices-client",
+            "support": {
+                "issues": "https://github.com/ezpizee/microservices-client/issues",
+                "source": "https://github.com/ezpizee/microservices-client/tree/master"
+            },
+            "time": "2021-01-06T15:58:29+00:00"
+        },
+        {
+            "name": "ezpizee/supported-cms",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezpizee/supported-cms.git",
+                "reference": "4f554a839576edd3e83cf97a89adda5a35833a72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezpizee/supported-cms/zipball/4f554a839576edd3e83cf97a89adda5a35833a72",
+                "reference": "4f554a839576edd3e83cf97a89adda5a35833a72",
+                "shasum": ""
+            },
+            "require": {
+                "ezpizee/microservices-client": "dev-master",
+                "ezpizee/utils": "dev-master",
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ezpizee\\SupportedCMS\\Drupal": "src/",
+                    "Ezpizee\\SupportedCMS\\Exception": "src/",
+                    "Ezpizee\\SupportedCMS\\Joomla": "src/",
+                    "Ezpizee\\SupportedCMS\\WordPress": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pang Khon",
+                    "email": "khon.pang@ezpizee.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com.com"
+                }
+            ],
+            "description": "PHP Supported CMS Libraries",
+            "homepage": "https://github.com/ezpizee/supported-cms",
+            "support": {
+                "issues": "https://github.com/ezpizee/supported-cms/issues",
+                "source": "https://github.com/ezpizee/supported-cms/tree/master"
+            },
+            "time": "2021-02-28T09:16:54+00:00"
+        },
+        {
+            "name": "ezpizee/utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezpizee/microservices-utils.git",
+                "reference": "358c9d9adbbd82eeec29b0d34e838098ccdda4a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezpizee/microservices-utils/zipball/358c9d9adbbd82eeec29b0d34e838098ccdda4a4",
+                "reference": "358c9d9adbbd82eeec29b0d34e838098ccdda4a4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ezpizee\\Utils": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pang Khon",
+                    "email": "khon.pang@ezpizee.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com.com"
+                }
+            ],
+            "description": "For all Ezpizee utility classes",
+            "homepage": "https://github.com/ezpizee/microservices-utils",
+            "support": {
+                "issues": "https://github.com/ezpizee/microservices-utils/issues",
+                "source": "https://github.com/ezpizee/microservices-utils/tree/master"
+            },
+            "time": "2021-02-28T13:19:51+00:00"
+        },
+        {
+            "name": "gx2cms/project",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezpizee/gx2cms-project.git",
+                "reference": "adb0e656393ad9864d6d52bafcab290d047fc586"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezpizee/gx2cms-project/zipball/adb0e656393ad9864d6d52bafcab290d047fc586",
+                "reference": "adb0e656393ad9864d6d52bafcab290d047fc586",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "GX2CMS\\Project": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pang Khon",
+                    "email": "khon.pang@ezpizee.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com.com"
+                }
+            ],
+            "description": "For all GX2CMS Project",
+            "homepage": "https://github.com/ezpizee/gx2cms-project",
+            "support": {
+                "issues": "https://github.com/ezpizee/gx2cms-project/issues",
+                "source": "https://github.com/ezpizee/gx2cms-project/tree/master"
+            },
+            "time": "2021-01-20T01:23:52+00:00"
+        },
+        {
+            "name": "lcobucci/jwt",
+            "version": "3.4.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcobucci/jwt.git",
+                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/511629a54465e89a31d3d7e4cf0935feab8b14c1",
+                "reference": "511629a54465e89a31d3d7e4cf0935feab8b14c1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ext-openssl": "*",
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.5",
+                "phpmd/phpmd": "~2.2",
+                "phpunit/php-invoker": "~1.1",
+                "phpunit/phpunit": "^5.7 || ^7.3",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "suggest": {
+                "lcobucci/clock": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lcobucci\\JWT\\": "src"
+                },
+                "files": [
+                    "compat/class-aliases.php",
+                    "compat/json-exception-polyfill.php",
+                    "compat/lcobucci-clock-polyfill.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Luís Otávio Cobucci Oblonczyk",
+                    "email": "lcobucci@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to work with JSON Web Token and JSON Web Signature",
+            "keywords": [
+                "JWS",
+                "jwt"
+            ],
+            "support": {
+                "issues": "https://github.com/lcobucci/jwt/issues",
+                "source": "https://github.com/lcobucci/jwt/tree/3.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/lcobucci",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/lcobucci",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-02-16T09:40:01+00:00"
+        },
+        {
+            "name": "mashape/unirest-php",
+            "version": "v3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mashape/unirest-php.git",
+                "reference": "842c0f242dfaaf85f16b72e217bf7f7c19ab12cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mashape/unirest-php/zipball/842c0f242dfaaf85f16b72e217bf7f7c19ab12cb",
+                "reference": "842c0f242dfaaf85f16b72e217bf7f7c19ab12cb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "0.1.*",
+                "phpunit/phpunit": "~4.4"
+            },
+            "suggest": {
+                "ext-json": "Allows using JSON Bodies for sending and parsing requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Unirest\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Unirest PHP",
+            "homepage": "https://github.com/Mashape/unirest-php",
+            "keywords": [
+                "client",
+                "curl",
+                "http",
+                "https",
+                "rest"
+            ],
+            "support": {
+                "email": "opensource@mashape.com",
+                "issues": "https://github.com/Mashape/unirest-php/issues",
+                "source": "https://github.com/Mashape/unirest-php/tree/master"
+            },
+            "time": "2016-08-11T17:49:21+00:00"
+        },
+        {
+            "name": "masterminds/html5",
+            "version": "2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Masterminds/html5-php.git",
+                "reference": "cadcfaaa13153e0e8eb92c49a53e140cf1a85dea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Masterminds/html5-php/zipball/cadcfaaa13153e0e8eb92c49a53e140cf1a85dea",
+                "reference": "cadcfaaa13153e0e8eb92c49a53e140cf1a85dea",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "sami/sami": "~2.0",
+                "satooshi/php-coveralls": "1.0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Masterminds\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Butcher",
+                    "email": "technosophos@gmail.com"
+                },
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
+                {
+                    "name": "Matt Farina",
+                    "email": "matt@mattfarina.com"
+                }
+            ],
+            "description": "An HTML5 parser and serializer.",
+            "homepage": "http://masterminds.github.io/html5-php",
+            "keywords": [
+                "HTML5",
+                "dom",
+                "html",
+                "parser",
+                "querypath",
+                "serializer",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/Masterminds/html5-php/issues",
+                "source": "https://github.com/Masterminds/html5-php/tree/2.x"
+            },
+            "time": "2018-11-17T20:24:36+00:00"
+        },
+        {
+            "name": "sendgrid/php-http-client",
+            "version": "3.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sendgrid/php-http-client.git",
+                "reference": "35862113b879274c7014e09681ac279a186665f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sendgrid/php-http-client/zipball/35862113b879274c7014e09681ac279a186665f1",
+                "reference": "35862113b879274c7014e09681ac279a186665f1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpunit/phpunit": "^5.7 || ^6.5",
+                "sebastian/version": "^1.0.6",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "suggest": {
+                "composer/ca-bundle": "Including this library will ensure that a valid CA bundle is available for secure connections"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SendGrid\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Bernier",
+                    "email": "mbernier@twilio.com"
+                },
+                {
+                    "name": "Elmer Thomas",
+                    "email": "ethomas@twilio.com"
+                }
+            ],
+            "description": "HTTP REST client, simplified for PHP",
+            "homepage": "http://github.com/sendgrid/php-http-client",
+            "keywords": [
+                "api",
+                "fluent",
+                "http",
+                "rest",
+                "sendgrid"
+            ],
+            "support": {
+                "issues": "https://github.com/sendgrid/php-http-client/issues",
+                "source": "https://github.com/sendgrid/php-http-client/tree/3.13.0"
+            },
+            "time": "2020-11-05T21:00:36+00:00"
+        },
+        {
+            "name": "sendgrid/sendgrid",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sendgrid/sendgrid-php.git",
+                "reference": "ab0023a6233f39e408b5eb8c4299f20790f5f5a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sendgrid/sendgrid-php/zipball/ab0023a6233f39e408b5eb8c4299f20790f5f5a7",
+                "reference": "ab0023a6233f39e408b5eb8c4299f20790f5f5a7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-openssl": "*",
+                "php": ">=5.6",
+                "sendgrid/php-http-client": "~3.10",
+                "starkbank/ecdsa": "0.*"
+            },
+            "replace": {
+                "sendgrid/sendgrid-php": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7.9 || ^6.4.3",
+                "squizlabs/php_codesniffer": "3.*",
+                "swaggest/json-diff": "^3.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SendGrid\\Contacts\\": "lib/contacts/",
+                    "SendGrid\\EventWebhook\\": "lib/eventwebhook/",
+                    "SendGrid\\Helper\\": "lib/helper/",
+                    "SendGrid\\Mail\\": "lib/mail/",
+                    "SendGrid\\Stats\\": "lib/stats/"
+                },
+                "classmap": [
+                    "lib/BaseSendGridClientInterface.php",
+                    "lib/SendGrid.php",
+                    "lib/TwilioEmail.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This library allows you to quickly and easily send emails through Twilio SendGrid using PHP.",
+            "homepage": "http://github.com/sendgrid/sendgrid-php",
+            "keywords": [
+                "email",
+                "grid",
+                "send",
+                "sendgrid",
+                "twilio sendgrid"
+            ],
+            "support": {
+                "issues": "https://github.com/sendgrid/sendgrid-php/issues",
+                "source": "https://github.com/sendgrid/sendgrid-php/tree/7.9.2"
+            },
+            "time": "2021-01-27T20:19:06+00:00"
+        },
+        {
+            "name": "starkbank/ecdsa",
+            "version": "0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/starkbank/ecdsa-php.git",
+                "reference": "9369d35ed9019321adb4eb9fd3be21357d527c74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/starkbank/ecdsa-php/zipball/9369d35ed9019321adb4eb9fd3be21357d527c74",
+                "reference": "9369d35ed9019321adb4eb9fd3be21357d527c74",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/ellipticcurve.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "StarkBank",
+                    "email": "developers@starkbank.com",
+                    "homepage": "https://starkbank.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "fast openSSL-compatible implementation of the Elliptic Curve Digital Signature Algorithm (ECDSA)",
+            "homepage": "https://github.com/starkbank/ecdsa-php",
+            "support": {
+                "issues": "https://github.com/starkbank/ecdsa-php/issues",
+                "source": "https://github.com/starkbank/ecdsa-php/tree/v0.0.4"
+            },
+            "time": "2020-05-15T15:46:20+00:00"
+        },
+        {
+            "name": "webconsol/handlebars.php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WEBCONSOL/handlebars.git",
+                "reference": "8c5dd574502fec6cbee950bf278b325500ca9656"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WEBCONSOL/handlebars/zipball/8c5dd574502fec6cbee950bf278b325500ca9656",
+                "reference": "8c5dd574502fec6cbee950bf278b325500ca9656",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Handlebars": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fzerorubigd",
+                    "email": "fzerorubigd@gmail.com"
+                },
+                {
+                    "name": "Behrooz Shabani (everplays)",
+                    "email": "everplays@gmail.com"
+                },
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@ezpizee.com"
+                }
+            ],
+            "description": "Handlebars processor for php",
+            "homepage": "https://github.com/WEBCONSOL/handlebars",
+            "support": {
+                "issues": "https://github.com/WEBCONSOL/handlebars/issues",
+                "source": "https://github.com/WEBCONSOL/handlebars/tree/master"
+            },
+            "time": "2021-01-06T15:59:15+00:00"
+        },
+        {
+            "name": "webconsol/php-hbs-helpers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WEBCONSOL/php-hbs-helpers.git",
+                "reference": "0d16ca05341c9bd0fc94983df0cee629127d877f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WEBCONSOL/php-hbs-helpers/zipball/0d16ca05341c9bd0fc94983df0cee629127d877f",
+                "reference": "0d16ca05341c9bd0fc94983df0cee629127d877f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Handlebars\\Engine": "src/",
+                    "Handlebars\\Exception": "src/",
+                    "Handlebars\\Helpers": "src/",
+                    "Handlebars\\Less": "src/",
+                    "Handlebars\\Processors": "src/",
+                    "Handlebars\\Sass": "src/",
+                    "Handlebars\\Utils": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sothea Nim",
+                    "email": "sothea.nim@webconsol.com",
+                    "homepage": "https://www.webconsol.com"
+                }
+            ],
+            "description": "PHP Handlebars Helpers",
+            "homepage": "https://github.com/WEBCONSOL/php-hbs-helpers",
+            "keywords": [
+                "handlebars"
+            ],
+            "support": {
+                "issues": "https://github.com/WEBCONSOL/php-hbs-helpers/issues",
+                "source": "https://github.com/WEBCONSOL/php-hbs-helpers/tree/master"
+            },
+            "time": "2021-02-12T13:04:30+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "ezpizee/connector-utils": 20,
+        "ezpizee/contextprocessor": 20,
+        "ezpizee/microservices-client": 20,
+        "ezpizee/utils": 20,
+        "webconsol/handlebars.php": 20,
+        "webconsol/php-hbs-helpers": 20,
+        "masterminds/html5": 20,
+        "gx2cms/project": 20,
+        "ezpizee/supported-cms": 20,
+        "sendgrid/sendgrid": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.1"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
