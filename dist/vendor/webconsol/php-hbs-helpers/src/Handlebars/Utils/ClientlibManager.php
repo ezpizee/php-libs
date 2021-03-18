@@ -200,38 +200,15 @@ class ClientlibManager
             $htmlBuffer = array();
             $lessBuffer = array();
             $sassBuffer = array();
-            $pattern = '/@import "(.[^"]*)";\n/';
             foreach ($this->files as $file) {
                 if (pathinfo($file, PATHINFO_EXTENSION) === FileExtension::SASS) {
                     $bfr = file_get_contents($file);
-                    $matches = PregUtil::getMatches($pattern, $bfr);
-                    if (sizeof($matches)) {
-                        foreach ($matches as $match) {
-                            $varFile = dirname($file) . '/' . $match[1] . '.less';
-                            if (file_exists($varFile)) {
-                                $bfr = str_replace($match[0], file_get_contents($varFile), $bfr);
-                            }
-                            else {
-                                die('File: ' . $varFile .' in @import "'.$match[1].'"; does not exist.');
-                            }
-                        }
-                    }
+                    $this->handleImport(dirname($file), FileExtension::SASS, $bfr);
                     $sassBuffer[] = $bfr;
                 }
                 else if (pathinfo($file, PATHINFO_EXTENSION) === FileExtension::LESS) {
                     $bfr = file_get_contents($file);
-                    $matches = PregUtil::getMatches($pattern, $bfr);
-                    if (sizeof($matches)) {
-                        foreach ($matches as $match) {
-                            $varFile = dirname($file) . '/' . $match[1] . '.less';
-                            if (file_exists($varFile)) {
-                                $bfr = str_replace($match[0], file_get_contents($varFile), $bfr);
-                            }
-                            else {
-                                die('File: ' . $varFile . ' in @import "'.$match[1].'"; does not exist.');
-                            }
-                        }
-                    }
+                    $this->handleImport(dirname($file), FileExtension::LESS, $bfr);
                     $lessBuffer[] = $bfr;
                 }
                 else if (pathinfo($file, PATHINFO_EXTENSION) === 'hbs') {
@@ -293,6 +270,29 @@ class ClientlibManager
         }
         else {
             new Error(ClientlibManager::class.' could not find: '.$this->pathInfo->getPath(), 404);
+        }
+    }
+
+    private function handleImport(string $dir, string $ext, string &$bfr): void {
+        $pattern = '/@import "(.[^"]*)";\n/';
+        $matches = PregUtil::getMatches($pattern, $bfr);
+        if (sizeof($matches)) {
+            foreach ($matches as $match) {
+                $varFile = $dir . '/' . $match[1] . '.' . $ext;
+                if (!file_exists($varFile)) {
+                    $exp = explode('/', $match[1]);
+                    $exp[sizeof($exp)-1] = '_'.$exp[sizeof($exp)-1];
+                    $match[1] = implode('/', $exp);
+                    $varFile = $dir . '/' . $match[1] . '.' . $ext;
+                }
+                if (file_exists($varFile)) {
+                    $bfr = str_replace($match[0], file_get_contents($varFile), $bfr);
+                    $this->handleImport($dir, $ext, $bfr);
+                }
+                else {
+                    die('File: ' . $varFile .' in @import "'.$match[1].'"; does not exist.');
+                }
+            }
         }
     }
 
