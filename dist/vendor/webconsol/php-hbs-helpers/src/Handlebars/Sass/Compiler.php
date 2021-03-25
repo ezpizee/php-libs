@@ -1246,9 +1246,9 @@ class Compiler {
                 // [4] - optional alpha component
                 list(, $r, $g, $b) = $value;
 
-                $r = round($r);
-                $g = round($g);
-                $b = round($b);
+                $r = round((float)$r);
+                $g = round((float)$g);
+                $b = round((float)$b);
 
                 if (count($value) == 5 && $value[4] != 1) { // rgba
                     return 'rgba('.$r.', '.$g.', '.$b.', '.$value[4].')';
@@ -1966,7 +1966,7 @@ class Compiler {
         }
 
         list($r,$g,$b, $a) = $args;
-        return array("color", $r[1], $g[1], $b[1], $a[1]);
+        return array("color", $r[1], $g[1], !empty($b)?$b[1]:'', !empty($a)?$a[1]:'');
     }
 
     // helper function for adjust_color, change_color, and scale_color
