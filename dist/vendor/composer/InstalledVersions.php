@@ -20,6 +20,8 @@ use Composer\Semver\VersionParser;
 
 
 
+
+
 class InstalledVersions
 {
 private static $installed = array (
@@ -30,11 +32,29 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '0e06e3509eac3d9d4f030bae0a7fefba1d9bcf6a',
+    'reference' => '4635415624d9a7c5b367a431de1d6f64f951f71e',
     'name' => 'ezpizee/php-libs',
   ),
   'versions' => 
   array (
+    'chillerlan/php-qrcode' => 
+    array (
+      'pretty_version' => '3.4.0',
+      'version' => '3.4.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd8bf297e6843a53aeaa8f3285ce04fc349d133d6',
+    ),
+    'chillerlan/php-settings-container' => 
+    array (
+      'pretty_version' => 'v1.2.x-dev',
+      'version' => '1.2.9999999.9999999-dev',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '22bdaf78f42b69c826d64bb76c397eecac94a2c2',
+    ),
     'ezpizee/connector-utils' => 
     array (
       'pretty_version' => 'dev-master',
@@ -72,7 +92,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '0e06e3509eac3d9d4f030bae0a7fefba1d9bcf6a',
+      'reference' => '4635415624d9a7c5b367a431de1d6f64f951f71e',
     ),
     'ezpizee/supported-cms' => 
     array (
@@ -203,7 +223,6 @@ $packages = array();
 foreach (self::getInstalled() as $installed) {
 $packages[] = array_keys($installed['versions']);
 }
-
 
 if (1 === \count($packages)) {
 return $packages[0];
@@ -400,6 +419,7 @@ self::$installedByVendor = array();
 
 
 
+
 private static function getInstalled()
 {
 if (null === self::$canGetVendors) {
@@ -409,7 +429,6 @@ self::$canGetVendors = method_exists('Composer\Autoload\ClassLoader', 'getRegist
 $installed = array();
 
 if (self::$canGetVendors) {
-
 foreach (ClassLoader::getRegisteredLoaders() as $vendorDir => $loader) {
 if (isset(self::$installedByVendor[$vendorDir])) {
 $installed[] = self::$installedByVendor[$vendorDir];

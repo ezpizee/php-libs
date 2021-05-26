@@ -14,6 +14,11 @@ class ComposerStaticInit71437e9a752949ff232404692d8051c5
     );
 
     public static $prefixLengthsPsr4 = array (
+        'c' => 
+        array (
+            'chillerlan\\Settings\\' => 20,
+            'chillerlan\\QRCode\\' => 18,
+        ),
         'S' => 
         array (
             'SendGrid\\Stats\\' => 15,
@@ -34,6 +39,14 @@ class ComposerStaticInit71437e9a752949ff232404692d8051c5
     );
 
     public static $prefixDirsPsr4 = array (
+        'chillerlan\\Settings\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-settings-container/src',
+        ),
+        'chillerlan\\QRCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
+        ),
         'SendGrid\\Stats\\' => 
         array (
             0 => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/stats',

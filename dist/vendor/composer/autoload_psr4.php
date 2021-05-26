@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'chillerlan\\Settings\\' => array($vendorDir . '/chillerlan/php-settings-container/src'),
+    'chillerlan\\QRCode\\' => array($vendorDir . '/chillerlan/php-qrcode/src'),
     'SendGrid\\Stats\\' => array($vendorDir . '/sendgrid/sendgrid/lib/stats'),
     'SendGrid\\Mail\\' => array($vendorDir . '/sendgrid/sendgrid/lib/mail'),
     'SendGrid\\Helper\\' => array($vendorDir . '/sendgrid/sendgrid/lib/helper'),
