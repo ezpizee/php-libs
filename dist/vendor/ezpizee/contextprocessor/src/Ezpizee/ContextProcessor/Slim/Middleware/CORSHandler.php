@@ -25,11 +25,11 @@ class CORSHandler
     public function __invoke(Request $req, Response $res, App $next): Response
     {
         $passCORS = false;
-        $em = $em = $next->getContainer()->get(DBOContainer::class);
+        $em = $next->getContainer()->get(DBOContainer::class);
         $referer = $req->getHeaderLine('Referer');
         $requestHeaders = explode(',', $req->getHeaderLine('Access-Control-Request-Headers'));
         $origin = strip_tags($req->getHeaderLine('Origin'));
-        $method = 'GET,POST,DELETE,PUT,PATCH,OPTIONS';
+        $method = 'OPTIONS,GET,POST,PUT,DELETE';
         $headers = '';
         $request = new EzRequest(['request'=>$req]);
         $isAjax = $request->isAjax() ||
@@ -72,17 +72,18 @@ class CORSHandler
         return $res;
     }
 
-    public function passCOSR(DBOContainer $em, string $merchantPublicKey, string $origin): bool
+    public function passCOSR(DBOContainer $em, string $publicKey, string $origin): bool
     {
         $passCORS = false;
-        if (UUID::isValid($merchantPublicKey)) {
+        if (UUID::isValid($publicKey)) {
+            $origin = str_replace(['https://','http://','/'], '', $origin);
             $conn = $em->getConnection();
-            $sql = 'SELECT user_id'.' 
+            $sql = 'SELECT host'.' 
                     FROM allowed_hosts 
-                    WHERE host_md5='.$conn->quote(md5(str_replace(['https://','http://','/'], '', $origin))).'
-                    AND public_key='.$conn->quote($merchantPublicKey);
+                    WHERE host_md5='.$conn->quote(md5($origin)).'
+                    AND public_key='.$conn->quote($publicKey);
             $row = $conn->loadAssoc($sql);
-            if (!empty($row)) {
+            if (!empty($row) && $row['host'] === $origin) {
                 $passCORS = true;
             }
         }
