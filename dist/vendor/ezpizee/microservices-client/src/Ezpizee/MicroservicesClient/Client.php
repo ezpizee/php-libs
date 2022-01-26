@@ -111,7 +111,7 @@ class Client
         $this->setBaseHeaders();
 
         if (self::$ignorePeerValidation) {
-            self::verifyPeer(!self::$ignorePeerValidation);
+            self::verifyPeer(false);
         }
 
         Logger::debug('API CALL: ' . $this->method . ' ' . $url . (isset($_SERVER['HTTP_REFERER']) ? '; refererer: ' . $_SERVER['HTTP_REFERER'] : ''));
@@ -256,12 +256,15 @@ class Client
 
                 Logger::debug("Get-Token: " . $url);
 
+                if (self::$ignorePeerValidation) {
+                    self::verifyPeer(false);
+                }
+
                 $response = Request::post($url, $this->getHeaders(), null, $user, $password);
 
                 if (isset($response->body->data)
                     && isset($response->body->data->token_param_name)
-                    && isset($response->body->data->{$response->body->data->token_param_name})
-                    && isset($response->body->data->expire_in)) {
+                    && isset($response->body->data->{$response->body->data->token_param_name})) {
                     $cookieVal = uniqid(self::SESSION_COOKIE_VALUE_PFX);
                     $tokenHandler = new $tokenHandler($cookieVal);
                     if ($tokenHandler instanceof TokenHandlerInterface) {
