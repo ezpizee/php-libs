@@ -66,6 +66,25 @@ class ClientlibManager
         }
     }
 
+    public function reset(): void
+    {
+        $this->pathInfo = null;
+        $this->isMinify = false;
+        $this->root = '';
+        $this->content = "";
+        $this->files = [];
+        $this->filePath = "";
+        $this->dirPath = "";
+        $this->isStyle = false;
+        $this->isScript = false;
+        $this->isJSON = false;
+        $this->lessVars = [];
+        $this->sassVars = [];
+        $this->assetDir = '';
+        $this->patterns = null;
+        $this->replaces = null;
+    }
+
     public static function renderHBSTemplates(string $root, string $q, string $format, array &$buffer, string $parent='') {
         $pattern = $root.$q.'/*';
         $list = glob($pattern);
