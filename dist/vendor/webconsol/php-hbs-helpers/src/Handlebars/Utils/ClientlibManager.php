@@ -24,7 +24,14 @@ class ClientlibManager
     private $patterns = null;
     private $replaces = null;
 
-    public function __construct(string $root, string $q, array $vars=array(), bool $isMinify=false)
+    public function __construct(string $root='', string $q='', array $vars=array(), bool $isMinify=false)
+    {
+        if (!empty($root) && !empty($q)) {
+            $this->init($root, $q, $vars, $isMinify);
+        }
+    }
+
+    public function init(string $root, string $q, array $vars=array(), bool $isMinify=false): void
     {
         $parts = explode('/', $root);
         $this->assetDir = '/'.$parts[sizeof($parts)-1] . '/' . pathinfo($q, PATHINFO_FILENAME);
