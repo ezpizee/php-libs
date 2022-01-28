@@ -3,7 +3,6 @@
 namespace Handlebars\Utils;
 
 use Exception;
-use Handlebars\Exception\Error;
 use Handlebars\Less\Compiler as LessCompiler;
 use Handlebars\Sass\Compiler as SassCompiler;
 
@@ -158,9 +157,11 @@ class ClientlibManager
             if (file_exists($style)) {
                 $styles = explode("\n", file_get_contents($style));
                 foreach ($styles as $file) {
-                    $file = $this->dirPath . DS . trim($file);
-                    if (file_exists($file)) {
-                        $this->files[] = $file;
+                    if (trim($file)) {
+                        $file = $this->dirPath . DS . trim($file);
+                        if (file_exists($file)) {
+                            $this->files[] = $file;
+                        }
                     }
                 }
             }
@@ -178,9 +179,11 @@ class ClientlibManager
             if (file_exists($script)) {
                 $scripts = explode("\n", file_get_contents($script));
                 foreach ($scripts as $file) {
-                    $file = $this->dirPath . DS . trim($file);
-                    if (file_exists($file)) {
-                        $this->files[] = $file;
+                    if (trim($file)) {
+                        $file = $this->dirPath . DS . trim($file);
+                        if (file_exists($file)) {
+                            $this->files[] = $file;
+                        }
                     }
                 }
             }
@@ -267,9 +270,6 @@ class ClientlibManager
             catch (Exception $e) {
                 $this->content = 'Error.' . "\n" . 'File: ' . $e->getFile() . "\n" . 'Message: ' . $e->getMessage();
             }
-        }
-        else {
-            new Error(ClientlibManager::class.' could not find: '.$this->pathInfo->getPath(), 404);
         }
     }
 
