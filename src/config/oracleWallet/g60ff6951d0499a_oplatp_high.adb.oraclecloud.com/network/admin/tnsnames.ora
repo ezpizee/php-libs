@@ -1,0 +1,12 @@
+oplatp_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-osaka-1.oraclecloud.com))(connect_data=(service_name=g60ff6951d0499a_oplatp_high.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-osaka-1.oraclecloud.com, OU=Oracle ADB OSAKA, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+oplatp_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-osaka-1.oraclecloud.com))(connect_data=(service_name=g60ff6951d0499a_oplatp_low.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-osaka-1.oraclecloud.com, OU=Oracle ADB OSAKA, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+oplatp_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-osaka-1.oraclecloud.com))(connect_data=(service_name=g60ff6951d0499a_oplatp_medium.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-osaka-1.oraclecloud.com, OU=Oracle ADB OSAKA, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+oplatp_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-osaka-1.oraclecloud.com))(connect_data=(service_name=g60ff6951d0499a_oplatp_tp.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-osaka-1.oraclecloud.com, OU=Oracle ADB OSAKA, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+oplatp_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ap-osaka-1.oraclecloud.com))(connect_data=(service_name=g60ff6951d0499a_oplatp_tpurgent.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-osaka-1.oraclecloud.com, OU=Oracle ADB OSAKA, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+
+

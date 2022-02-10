@@ -212,7 +212,7 @@ class GX2CMS extends Processor
             (new GX2CMS())->process($html, $this->context);
             $source = Hbs::HBS_TOKENS[0].'#use \''.$attr->value.'\' '."'".$varName."'".Hbs::HBS_TOKENS[1].
                 $html.Hbs::HBS_TOKENS[0].'/use'.Hbs::HBS_TOKENS[1];
-            $ele = $dom->parentNode->ownerDocument->createElement('gx2cms', $source);
+            $ele = $dom->parentNode->ownerDocument->createElement('ezpzlib', $source);
             $dom->parentNode->replaceChild($ele, $dom);
             //DOMQuery::replaceDOMElementWithDOMText($dom->parentNode, $dom, $source);
         }
@@ -236,7 +236,7 @@ class GX2CMS extends Processor
             $source = Hbs::HBS_TOKENS[0].$fun[0].$val.
                 Hbs::HBS_TOKENS[1].
                 DOMQuery::getContent($dom).Hbs::HBS_TOKENS[0].$fun[1].Hbs::HBS_TOKENS[1];
-            $ele = $dom->parentNode->ownerDocument->createElement('gx2cms', $source);
+            $ele = $dom->parentNode->ownerDocument->createElement('ezpzlib', $source);
             $dom->parentNode->replaceChild($ele, $dom);
             //DOMQuery::replaceDOMElementWithDOMText($dom->parentNode, $dom, $source);
         }
@@ -255,7 +255,7 @@ class GX2CMS extends Processor
                 ['${@index', '${this.'],
                 $source
             );
-            $ele = $dom->parentNode->ownerDocument->createElement('gx2cms', $source);
+            $ele = $dom->parentNode->ownerDocument->createElement('ezpzlib', $source);
             $dom->parentNode->replaceChild($ele, $dom);
             //DOMQuery::replaceDOMElementWithDOMText($dom->parentNode, $dom, $source);
         }
@@ -301,7 +301,7 @@ class GX2CMS extends Processor
             else {
                 $source = implode('', $source);
             }
-            $ele = $dom->parentNode->ownerDocument->createElement('gx2cms', $source);
+            $ele = $dom->parentNode->ownerDocument->createElement('ezpzlib', $source);
             $dom->parentNode->replaceChild($ele, $dom);
             //DOMQuery::replaceDOMElementWithDOMText($dom->parentNode, $dom, $source);
         }
@@ -322,7 +322,7 @@ class GX2CMS extends Processor
                 $this->replaceVarWithItsContextValue($resourceValue);
             }
             $source = Hbs::HBS_TOKENS[0].'#include '.$this->removeToken($resourceValue).Hbs::HBS_TOKENS[1];
-            $ele = $dom->parentNode->ownerDocument->createElement('gx2cms', $source);
+            $ele = $dom->parentNode->ownerDocument->createElement('ezpzlib', $source);
             $dom->parentNode->replaceChild($ele, $dom);
             //DOMQuery::replaceDOMElementWithDOMText($dom->parentNode, $dom, $source);
         }
@@ -338,7 +338,7 @@ class GX2CMS extends Processor
             }
             $resourceValue = str_replace("'", '"', $attr->value);
             $source = Hbs::HBS_TOKENS[0] . '#clientlib ' . $this->removeToken($resourceValue) . ' ' . $dataType . Hbs::HBS_TOKENS[1];
-            $ele = $dom->parentNode->ownerDocument->createElement('gx2cms', $source);
+            $ele = $dom->parentNode->ownerDocument->createElement('ezpzlib', $source);
             $dom->parentNode->replaceChild($ele, $dom);
             // DOMQuery::replaceDOMElementWithDOMText($dom->parentNode, $dom, $source);
         }
@@ -381,7 +381,7 @@ class GX2CMS extends Processor
     : void
     {
         $this->tmpl = str_replace(
-            ['&lt;sly ', '&lt;/sly&gt;', '&gt;', '&lt;', '<gx2cms>', '</gx2cms>'],
+            ['&lt;sly ', '&lt;/sly&gt;', '&gt;', '&lt;', '<ezpzlib>', '</ezpzlib>'],
             ['<sly ', '</sly>', '>', '<', '', ''],
             $this->tmpl
         );

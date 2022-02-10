@@ -88,7 +88,7 @@
       ),
       'reference' => '358c9d9adbbd82eeec29b0d34e838098ccdda4a4',
     ),
-    'gx2cms/project' => 
+    'ezpzlib/project' => 
     array (
       'pretty_version' => 'dev-master',
       'version' => 'dev-master',

@@ -128,7 +128,7 @@ class ComposerStaticInit71437e9a752949ff232404692d8051c5
         array (
             'GX2CMS\\Project' => 
             array (
-                0 => __DIR__ . '/..' . '/gx2cms/project/src',
+                0 => __DIR__ . '/..' . '/ezpzlib/project/src',
             ),
         ),
         'E' => 

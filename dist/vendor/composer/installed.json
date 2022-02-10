@@ -391,17 +391,17 @@
             "install-path": "../ezpizee/utils"
         },
         {
-            "name": "gx2cms/project",
+            "name": "ezpzlib/project",
             "version": "dev-master",
             "version_normalized": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ezpizee/gx2cms-project.git",
+                "url": "https://github.com/ezpizee/ezpzlib-project.git",
                 "reference": "adb0e656393ad9864d6d52bafcab290d047fc586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezpizee/gx2cms-project/zipball/adb0e656393ad9864d6d52bafcab290d047fc586",
+                "url": "https://api.github.com/repos/ezpizee/ezpzlib-project/zipball/adb0e656393ad9864d6d52bafcab290d047fc586",
                 "reference": "adb0e656393ad9864d6d52bafcab290d047fc586",
                 "shasum": ""
             },
@@ -432,12 +432,12 @@
                 }
             ],
             "description": "For all GX2CMS Project",
-            "homepage": "https://github.com/ezpizee/gx2cms-project",
+            "homepage": "https://github.com/ezpizee/ezpzlib-project",
             "support": {
-                "issues": "https://github.com/ezpizee/gx2cms-project/issues",
-                "source": "https://github.com/ezpizee/gx2cms-project/tree/master"
+                "issues": "https://github.com/ezpizee/ezpzlib-project/issues",
+                "source": "https://github.com/ezpizee/ezpzlib-project/tree/master"
             },
-            "install-path": "../gx2cms/project"
+            "install-path": "../ezpzlib/project"
         },
         {
             "name": "lcobucci/jwt",

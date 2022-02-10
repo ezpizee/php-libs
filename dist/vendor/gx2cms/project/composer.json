@@ -1,7 +1,7 @@
 {
-  "name": "gx2cms/project",
+  "name": "ezpzlib/project",
   "description": "For all GX2CMS Project",
-  "homepage": "https://github.com/ezpizee/gx2cms-project",
+  "homepage": "https://github.com/ezpizee/ezpzlib-project",
   "type": "library",
   "minimum-stability": "dev",
   "prefer-stable": true,

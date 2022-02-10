@@ -15,7 +15,7 @@ return array(
     'Handlebars\\Exception' => array($vendorDir . '/webconsol/php-hbs-helpers/src'),
     'Handlebars\\Engine' => array($vendorDir . '/webconsol/php-hbs-helpers/src'),
     'Handlebars' => array($vendorDir . '/webconsol/handlebars.php/src'),
-    'GX2CMS\\Project' => array($vendorDir . '/gx2cms/project/src'),
+    'GX2CMS\\Project' => array($vendorDir . '/ezpzlib/project/src'),
     'Ezpizee\\Utils' => array($vendorDir . '/ezpizee/utils/src'),
     'Ezpizee\\SupportedCMS\\WordPress' => array($vendorDir . '/ezpizee/supported-cms/src'),
     'Ezpizee\\SupportedCMS\\Joomla' => array($vendorDir . '/ezpizee/supported-cms/src'),

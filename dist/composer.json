@@ -26,7 +26,7 @@
     "mashape/unirest-php": "^3.0",
     "lcobucci/jwt": "^3.4",
     "masterminds/html5": "2.x-dev",
-    "gx2cms/project": "dev-master",
+    "ezpzlib/project": "dev-master",
     "ezpizee/supported-cms": "dev-master",
     "sendgrid/sendgrid": "dev-main",
     "chillerlan/php-qrcode": "^3.4"

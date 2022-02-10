@@ -82,3 +82,8 @@ id_rsa.pub
 /dist/*/*/.gitignore
 /dist/*/*/*/.gitignore
 /dist/*/*/*/*/.gitignore
+/cache
+/tmp
+/Dockerfile
+#/src/config
+#/src/test.php

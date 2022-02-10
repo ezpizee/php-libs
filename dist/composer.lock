@@ -376,16 +376,16 @@
             "time": "2021-02-28T13:19:51+00:00"
         },
         {
-            "name": "gx2cms/project",
+            "name": "ezpzlib/project",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ezpizee/gx2cms-project.git",
+                "url": "https://github.com/ezpizee/ezpzlib-project.git",
                 "reference": "adb0e656393ad9864d6d52bafcab290d047fc586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezpizee/gx2cms-project/zipball/adb0e656393ad9864d6d52bafcab290d047fc586",
+                "url": "https://api.github.com/repos/ezpizee/ezpzlib-project/zipball/adb0e656393ad9864d6d52bafcab290d047fc586",
                 "reference": "adb0e656393ad9864d6d52bafcab290d047fc586",
                 "shasum": ""
             },
@@ -414,10 +414,10 @@
                 }
             ],
             "description": "For all GX2CMS Project",
-            "homepage": "https://github.com/ezpizee/gx2cms-project",
+            "homepage": "https://github.com/ezpizee/ezpzlib-project",
             "support": {
-                "issues": "https://github.com/ezpizee/gx2cms-project/issues",
-                "source": "https://github.com/ezpizee/gx2cms-project/tree/master"
+                "issues": "https://github.com/ezpizee/ezpzlib-project/issues",
+                "source": "https://github.com/ezpizee/ezpzlib-project/tree/master"
             },
             "time": "2021-01-20T01:23:52+00:00"
         },
@@ -907,7 +907,7 @@
         "webconsol/handlebars.php": 20,
         "webconsol/php-hbs-helpers": 20,
         "masterminds/html5": 20,
-        "gx2cms/project": 20,
+        "ezpzlib/project": 20,
         "ezpizee/supported-cms": 20,
         "sendgrid/sendgrid": 20
     },

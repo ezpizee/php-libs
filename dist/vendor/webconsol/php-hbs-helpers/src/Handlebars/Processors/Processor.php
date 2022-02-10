@@ -106,7 +106,7 @@ class Processor
             foreach ($matches as $i=>$match) {
                 $exp = explode($match[0], $this->tmpl);
                 $exp2 = explode('</script>', $exp[1]);
-                $replace = '[gx2cms-ignore-'.uniqid($i).']';
+                $replace = '[ezpzlib-ignore-'.uniqid($i).']';
                 $pattern = $match[0].$exp2[0].'</script>';
                 self::$ignoreList[$replace] = $pattern;
                 $this->tmpl = str_replace($pattern, $replace, $this->tmpl);

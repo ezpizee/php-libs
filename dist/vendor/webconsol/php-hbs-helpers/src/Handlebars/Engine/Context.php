@@ -10,7 +10,7 @@ use ParseError;
 
 class Context extends BaseContext
 {
-    const DEFAULT_GX2CMS_VAR_RETURN_VALUE = 'gx2cms_not_found';
+    const DEFAULT_GX2CMS_VAR_RETURN_VALUE = 'ezpzlib_not_found';
 
     public function __construct($context)
     {
@@ -29,9 +29,9 @@ class Context extends BaseContext
         }
         $variableName = trim($variableName);
 
-        $gx2cmsVarVal = $this->getGX2CMSSpecificContext($variableName, $strict);
-        if ($gx2cmsVarVal !== self::DEFAULT_GX2CMS_VAR_RETURN_VALUE) {
-            return $gx2cmsVarVal;
+        $ezpzlibVarVal = $this->getGX2CMSSpecificContext($variableName, $strict);
+        if ($ezpzlibVarVal !== self::DEFAULT_GX2CMS_VAR_RETURN_VALUE) {
+            return $ezpzlibVarVal;
         }
 
         $level = 0;
