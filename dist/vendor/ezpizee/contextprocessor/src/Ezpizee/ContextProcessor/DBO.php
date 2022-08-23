@@ -2,6 +2,7 @@
 
 namespace Ezpizee\ContextProcessor;
 
+use Ezpizee\Utils\Logger;
 use Ezpizee\Utils\StringUtil;
 use JsonSerializable;
 use PDO;
@@ -11,153 +12,144 @@ use RuntimeException;
 
 class DBO implements JsonSerializable
 {
-    private static $connections = [];
-    /**
-     * @var PDO
-     */
-    private $conn = null;
-    /**
-     * @var DBCredentials
-     */
-    private $config = null;
-    private $stm = '';
-    private $stopWhenError = false;
-    private $keepResults = false;
-    private $errors = [];
-    private $results = [];
-    private $queries = [];
-    private $isDebug = false;
-    private $cachedResults = [];
+    private static array $errors = [];
+    private static array $queries = [];
+    private static array $connections = [];
+    /** @var PDO|resource|false $conn */
+    private $conn;
+    private DBCredentials $config;
+    private string $stm = '';
+    private bool $stopWhenError = false;
+    private bool $keepResults = false;
+    private array $results = [];
+    private bool $isDebug = false;
+    private array $cachedResults = [];
 
     public function __construct(DBCredentials $config, bool $stopWhenError = false, bool $keepResults = false)
     {
-        $this->stopWhenError = $stopWhenError;
-        $this->keepResults = $keepResults;
         $this->config = $config;
         if ($this->config->isValid()) {
+            $this->stopWhenError = $stopWhenError;
+            $this->keepResults = $keepResults;
             $this->connect();
+        }
+    }
+
+    public static function closeAllConnections(): void
+    {
+        if (!empty(self::$connections)) {
+            foreach (self::$connections as $i=>$connection) {
+                self::$connections[$i] = null;
+            }
+            self::$connections = [];
+        }
+    }
+
+    private function connect(): void
+    {
+        if (defined('DEBUG') && DEBUG &&
+            defined('EZPIZEE_STACK_SQL_STM') && EZPIZEE_STACK_SQL_STM) {
+            $this->setIsDebug(true);
+        }
+        if ($this->config->isValid()) {
+            if (isset(self::$connections[$this->config->dsn])) {
+                $this->conn = self::$connections[$this->config->dsn];
+            }
+            else if ($this->config->driver === 'oracle_oci') {
+                $this->conn = oci_connect($this->config->username, $this->config->password, $this->config->dsn, $this->config->charset);
+                if (!$this->conn) {
+                    $m = oci_error();
+                    throw new RuntimeException(
+                        "Failed to connect to db server (".$this->config->driver."): " . $m['message'] . ' (' . $this->config->dsn . ')',
+                        500
+                    );
+                }
+                else {
+                    self::$connections[$this->config->dsn] = $this->conn;
+                }
+            }
+            else {
+                try {
+                    $this->conn = new PDO($this->config->dsn, $this->config->username, $this->config->password, $this->config->options);
+                    self::$connections[$this->config->dsn] = $this->conn;
+                }
+                catch (PDOException $e) {
+                    throw new RuntimeException(
+                        "Failed to connect to db server (".$this->config->driver."): " . $e->getMessage() . ' (' . $this->config->dsn . ')',
+                        500
+                    );
+                }
+            }
         }
         else {
             throw new RuntimeException('Invalid sql credentials (' . DBO::class . ')');
         }
     }
 
-    private function connect()
-    : void
-    {
-        if (defined('DEBUG') && DEBUG &&
-            defined('EZPIZEE_STACK_SQL_STM') && EZPIZEE_STACK_SQL_STM) {
-            $this->setIsDebug(true);
-        }
-        try {
-            if (isset(self::$connections[$this->config->dsn])) {
-                $this->conn = self::$connections[$this->config->dsn];
-            }
-            else {
-                $this->conn = new PDO(
-                    $this->config->dsn,
-                    $this->config->username,
-                    $this->config->password,
-                    $this->config->options
-                );
-                self::$connections[$this->config->dsn] = $this->conn;
-            }
-        }
-        catch (PDOException $e) {
-            throw new RuntimeException("Failed to connect to MySQL: " . $e->getMessage() . ' (' . $this->config . ')');
-        }
-    }
+    public function commit(): bool {return $this->conn->commit();}
 
     public function isConnected(): bool {return $this->conn instanceof PDO;}
 
     public function setIsDebug(bool $b): void {$this->isDebug = $b;}
 
-    public function getErrors(): array {return $this->errors;}
+    public static function getErrors(): array {return self::$errors;}
 
-    public function getDebugQueries(): array {return $this->queries;}
+    public static function getDebugQueries(): array {return self::$queries;}
 
-    public function closeConnection()
-    : void
+    public function closeConnection(): void
     {
         if ($this->isConnected()) {
             $this->conn = null;
             if (isset(self::$connections[$this->config->dsn])) {
                 unset(self::$connections[$this->config->dsn]);
+                $this->config = new DBCredentials([]);
             }
         }
     }
 
     public function lastInsertId() { return $this->isConnected() ? $this->conn->lastInsertId() : 0; }
 
-    public function exec(string $query = ''): bool {return $this->execute($query);}
+    public function exec(string $query = ''): bool { return $this->execute($query); }
 
-    public function executeQuery(string $query): bool {return $this->execute($query);}
+    public function executeQuery(string $query): bool { return $this->execute($query); }
 
-    public function execute(string $query = '')
-    : bool
+    public function execute(string $query = ''): bool
     {
-        if ($query) {
-            $this->setQuery($query);
-        }
-        if ($this->stm) {
-            $this->reset();
-            $arr = explode(";\n", $this->stm);
-            if (sizeof($arr) > 1) {
-                $query = '';
-                foreach ($arr as $line) {
-                    // Skip it if it's a comment
-                    if (
-                        (substr($line, 0, 2) === '--' || trim($line) === '') ||
-                        (
-                            strlen(trim($line)) > 3 && substr(trim($line), 0, 3) === '/*!' &&
-                            substr(trim($line), -3, 3) === '*/;'
-                        )
-                    ) {
-                        continue;
-                    }
-
-                    // Add this line to the current segment
-                    $query .= $line;
-
-                    // If it has a semicolon at the end, it's the end of the query
-                    if (substr(trim($line), -1, 1) === ';') {
-                        $this->query(substr($query, 0, strlen($query) - 1), false, false);
-                        // Reset temp variable to empty
-                        $query = '';
-                    }
-                    else if (trim($query)) {
-                        $this->query($query, false, false);
-                        // Reset temp variable to empty
-                        $query = '';
-                    }
-                }
+        if (empty($query)) {
+            if ($this->stm) {
+                $query = $this->stm;
             }
-            else {
-                $this->query($this->stm, false, false);
+            else if ($this->isDebug) {
+                throw new RuntimeException(json_encode(debug_backtrace()));
             }
-            return sizeof($this->errors) < 1;
         }
-        else {
-            throw new RuntimeException(DBO::class . '.execute: query statement is empty', 500);
+        if ($this->isDebug && defined('EZPIZEE_STACK_SQL_STM') && EZPIZEE_STACK_SQL_STM) {
+            self::$queries[] = $query;
         }
+        $exec = $this->conn->exec($query);
+        if (!empty($this->conn->errorInfo()) && (int)$this->conn->errorCode() > 0) {
+            if ($this->stopWhenError) {
+                throw new RuntimeException(DBO::class . ".query: " . json_encode($this->conn->errorInfo()) . "\n");
+            } else {
+                self::$errors[] = $this->conn->errorInfo();
+            }
+        }
+        return $exec;
     }
 
-    public function setQuery(string $stm)
-    : void
+    public function executeMultipleQueries(string $queries): bool
     {
-        $this->stm = str_replace('#__', $this->getPrefix(), $stm);
+        $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, 0);
+        return $this->execute($queries);
     }
 
-    public function getPrefix()
-    : string
-    {
-        return $this->isConnected() ? $this->config->prefix : '';
-    }
+    public function setQuery(string $stm): void {$this->stm = str_replace('#__', $this->getPrefix(), $stm);}
 
-    private function reset()
-    : void
+    public function getPrefix(): string {return $this->isConnected() ? $this->config->prefix : '';}
+
+    private function reset(): void
     {
-        $this->errors = [];
+        self::$errors = [];
         $this->results = [];
     }
 
@@ -170,8 +162,9 @@ class DBO implements JsonSerializable
             $this->results = $this->cachedResults[$md5Query];
         }
         else {
-            if ($this->isDebug) {
-                $this->queries[] = $query;
+            if (!$this->conn) {Logger::debug($query);}
+            if ($this->isDebug && defined('EZPIZEE_STACK_SQL_STM') && EZPIZEE_STACK_SQL_STM) {
+                self::$queries[] = $query;
             }
 
             if ($fetchResult) {
@@ -182,8 +175,8 @@ class DBO implements JsonSerializable
                         if (!empty($row)) {
                             $this->results[] = $row;
                         }
-                    } else if (!empty($this->conn->errorInfo())) {
-                        $this->errors[] = $this->conn->errorInfo();
+                    } else if (!empty($this->conn->errorInfo()) && (int)$this->conn->errorCode() > 0) {
+                        self::$errors[] = $this->conn->errorInfo();
                     }
                 } else {
                     $result = $this->conn->query($query);
@@ -194,17 +187,17 @@ class DBO implements JsonSerializable
                                 $this->results[] = $row;
                             }
                         }
-                    } else if (!empty($this->conn->errorInfo())) {
-                        $this->errors[] = $this->conn->errorInfo();
+                    } else if (!empty($this->conn->errorInfo()) && (int)$this->conn->errorCode() > 0) {
+                        self::$errors[] = $this->conn->errorInfo();
                     }
                 }
             } else {
                 $result = $this->conn->query($query);
-                if (is_bool($result) && !$result && !empty($this->conn->errorInfo())) {
+                if (is_bool($result) && !$result && !empty($this->conn->errorInfo()) && (int)$this->conn->errorCode() > 0) {
                     if ($this->stopWhenError || $stopWhenError) {
                         throw new RuntimeException(DBO::class . ".query: " . json_encode($this->conn->errorInfo()) . "\n");
                     } else {
-                        $this->errors[] = $this->conn->errorInfo();
+                        self::$errors[] = $this->conn->errorInfo();
                     }
                 } else if ($result instanceof PDOStatement && $this->keepResults) {
                     $this->results[] = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -214,28 +207,48 @@ class DBO implements JsonSerializable
         }
     }
 
-    public final function getTableColumns(string $tableName)
-    : TableColumns
+    public final function getTableColumns(string $tableName): TableColumns
     {
-        $query = 'DESCRIBE ' . $this->quoteName($tableName);
-        return (new TableColumns($this->loadAssocList($query)));
+        return (new TableColumns($this->loadAssocList('DESCRIBE ' . $this->quoteName($tableName))));
     }
 
-    public final function alterStorageEngine(string $tb, string $engine)
-    : void
+    public final function alterStorageEngine(string $tb, string $engine): void {$this->exec('ALTER'.' TABLE '.$tb.' ENGINE = '.$engine);}
+
+    public function quoteName($value): string
     {
-        $query = 'ALTER'.' TABLE '.$tb.' ENGINE = '.$engine;
-        $this->exec($query);
+        return '`' . (is_array($value) ? implode('`,`', $value) : $value) . '`';
     }
 
-    public function quoteName(string $str)
-    : string
+    public function quote($value, string $separator=''): string
     {
-        return '`' . $str . '`';
+        if ($this->isConnected()) {
+            if (is_object($value)) {
+                return $this->conn->quote(json_encode($value));
+            }
+            else if (is_array($value)) {
+                if (!empty($separator)) {
+                    foreach ($value as $i=>$item) {
+                        $value[$i] = $this->conn->quote($item);
+                    }
+                    return implode($separator, $value);
+                }
+                return $this->conn->quote(json_encode($value));
+            }
+            else if (!empty($separator)) {
+                $arr = explode($separator, $value);
+                foreach ($arr as $i=>$item) {
+                    $arr[$i] = $this->conn->quote($item);
+                }
+                return implode($separator, $arr);
+            }
+            else {
+                return $this->conn->quote($value);
+            }
+        }
+        return $value;
     }
 
-    public function loadAssocList(string $query = '')
-    : array
+    public function loadAssocList(string $query = ''): array
     {
         if ($query) {
             $this->setQuery($query);
@@ -259,7 +272,7 @@ class DBO implements JsonSerializable
 
                     // If it has a semicolon at the end, it's the end of the query
                     if (substr(trim($line), -1, 1) == ';') {
-                        $this->query(substr($query, 0, strlen($query) - 1), true, false);
+                        $this->query(substr($query, 0, strlen($query) - 1), true);
                         // Reset temp variable to empty
                         $query = '';
                     }
@@ -267,7 +280,7 @@ class DBO implements JsonSerializable
                 return $this->results;
             }
             else {
-                $this->query($this->stm, true, false);
+                $this->query($this->stm, true);
                 return $this->results;
             }
         }
@@ -276,22 +289,14 @@ class DBO implements JsonSerializable
         }
     }
 
-    public final function dbExists(string $dbName)
-    : bool
+    public final function dbExists(string $dbName): bool
     {
         $dbExistStm = 'SELECT ' . 'SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME=' . $this->quote($dbName);
         $row = $this->loadAssoc($dbExistStm);
         return !empty($row) && is_array($row) && isset($row['SCHEMA_NAME']);
     }
 
-    public function quote(string $str)
-    : string
-    {
-        return $this->isConnected() ? $this->conn->quote($str) : $str;
-    }
-
-    public function loadAssoc(string $query = '')
-    : array
+    public function loadAssoc(string $query = ''): array
     {
         if ($query) {
             $this->setQuery($query);
@@ -346,16 +351,9 @@ class DBO implements JsonSerializable
 
     public function getConnections(): array {return array_keys(self::$connections);}
 
-    /**
-     * @return DBCredentials
-     */
-    public function getConfig() { return $this->config; }
+    public function getConfig(): DBCredentials {return $this->config;}
 
-    public function __toString() { return json_encode($this->jsonSerialize()); }
+    public function jsonSerialize(): array {return $this->config->jsonSerialize();}
 
-    public function jsonSerialize()
-    : array
-    {
-        return $this->config->jsonSerialize();
-    }
+    public function __toString(): string {return json_encode($this->jsonSerialize());}
 }

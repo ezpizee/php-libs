@@ -379,8 +379,13 @@ class Template
                 $tmp = ltrim($tmp);
             }
 
+            // modified on 09/05/2022
+            if (is_array($tmp)) {
+                $tmp = json_encode($tmp);
+            }
+
             $buffer .= $tmp;
-            // Some time, there is more than 
+            // Some time, there is more than
             //one string token (first is empty),
             //so we need to trim all of them in one shot
 
@@ -689,9 +694,14 @@ class Template
         if ($escaped && !($result instanceof SafeString)) {
             $escape_args = $this->handlebars->getEscapeArgs();
             array_unshift($escape_args, $result);
+            // modified on 09/05/2022
+            $escape_args = array_values($escape_args);
+            if (is_array($escape_args) || is_object($escape_args)) {
+                $escape_args = json_encode($escape_args);
+            }
             $result = call_user_func_array(
                 $this->handlebars->getEscape(),
-                array_values($escape_args)
+                [$escape_args]
             );
         }
 

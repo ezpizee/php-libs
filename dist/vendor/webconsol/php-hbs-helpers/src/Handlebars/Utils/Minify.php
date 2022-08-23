@@ -63,13 +63,13 @@ class Minify
     }
 
     // CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
-    public static function css($input)
+    public static function css($input, $filters=array(), $plugins=array())
     : string
     {
         if (trim($input) === "") {
             return $input;
         }
-        return CssMin::minify($input);
+        return CssMin::minify($input, $filters, $plugins);
     }
 
     // JavaScript Minifier

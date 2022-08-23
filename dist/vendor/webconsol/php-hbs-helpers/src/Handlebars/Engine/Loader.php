@@ -14,7 +14,7 @@ class Loader
         foreach ($list as $helper) {
             $className = pathinfo($helper, PATHINFO_FILENAME);
             $cls = self::$packagePfx . $className;
-            $helperName = str_replace('helper', '', strtolower($className));
+            $helperName = str_replace(['_helper', 'helper'], '', strtolower($className));
             if (!class_exists($cls, false)) {
                 include $helper;
             }

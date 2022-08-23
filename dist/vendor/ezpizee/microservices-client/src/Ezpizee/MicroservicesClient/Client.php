@@ -67,7 +67,10 @@ class Client
             $this->host = $host;
             $this->tokenHandler = $tokenHandler;
             if ($config->has(self::KEY_BEARER)) {
-                $this->addBearerTokenHeader($config->get(self::KEY_BEARER));
+                $this->addAuthorizationHeader($config->get(self::KEY_BEARER));
+            }
+            else if ($config->has(self::HEADER_PARAM_ACCESS_TOKEN)) {
+                $this->addAuthorizationHeader($config->get(self::HEADER_PARAM_ACCESS_TOKEN));
             }
         }
         else {
@@ -240,7 +243,7 @@ class Client
                 if ($tokenHandler instanceof TokenHandlerInterface) {
                     $token = $tokenHandler->getToken();
                     if ($token instanceof Token && $token->getAuthorizationBearerToken()) {
-                        $this->addBearerTokenHeader($token->getAuthorizationBearerToken());
+                        $this->addAuthorizationHeader($token->getAuthorizationBearerToken());
                     }
                     else {
                         $tokenHandler->setCookie($tokenKey);
@@ -273,7 +276,7 @@ class Client
                         $tokenHandler->setCookie($tokenKey, $cookieVal, $expire);
                         $tokenHandler->keepToken(new Token(json_decode(json_encode($response->body->data), true)));
                     }
-                    $this->addBearerTokenHeader($response->body->data->{$response->body->data->token_param_name});
+                    $this->addAuthorizationHeader($response->body->data->{$response->body->data->token_param_name});
                 }
                 else {
                     throw new RuntimeException(
@@ -388,15 +391,20 @@ class Client
         $this->platformVersion = $platformVersion;
     }
 
-    public function addBearerTokenHeader(string $token)
+    public function addAuthorizationHeader(string $token)
     : void
     {
-        $this->addHeader(self::HEADER_PARAM_ACCESS_TOKEN, 'Bearer '.$token);
+        if (strpos($token, 'Bearer ') !== false || strpos($token, 'Basic ') !== false) {
+            $this->addHeader(self::HEADER_PARAM_ACCESS_TOKEN, $token);
+        }
+        else {
+            $this->addHeader(self::HEADER_PARAM_ACCESS_TOKEN, 'Bearer '. $token);
+        }
     }
 
     public function addBasicTokenHeader(string $user, string $pwd)
     : void
     {
-        $this->addHeader(self::HEADER_PARAM_ACCESS_TOKEN, 'Basic '.base64_encode($user.':'.$pwd));
+        $this->addAuthorizationHeader('Basic ' . base64_encode($user.':'.$pwd));
     }
 }

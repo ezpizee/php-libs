@@ -2,6 +2,7 @@
 
 namespace Ezpizee\Utils;
 
+use Ezpizee\Utils\Encryption\Encryptor;
 use RuntimeException;
 
 final class RequestBodyValidator
@@ -63,6 +64,9 @@ final class RequestBodyValidator
                 self::throwError($field);
             }
         }
+        else if ($field->is('type', 'aes_encrypted')) {
+            self::validateAESEncryptedData($field, $v);
+        }
     }
 
     public static function validateString(ListModel $field, string $v)
@@ -109,6 +113,15 @@ final class RequestBodyValidator
             return $num >= $minMax[0] && $num <= $minMax[1];
         }
         return $num >= $size;
+    }
+
+    private static function validateAESEncryptedData(ListModel $field, string $v)
+    : void
+    {
+        $decrypted = (new Encryptor())->cryptoPHPJS()->decrypt($v);
+        if (!strlen($decrypted)) {
+            self::throwError($field);
+        }
     }
 
     public static function validateNumber(ListModel $field, string $v)
@@ -232,16 +245,20 @@ final class RequestBodyValidator
                     $j = 0;
                     $element = null;
                     $found = [];
+                    $errorFields = [];
                     foreach ($elements as $i => $element) {
                         if (is_array($element) && isset($element['name']) && isset($v[$element['name']])) {
                             $n++;
                             $found[] = $element;
                             self::validate(new ListModel($element), $v[$element['name']]);
                         }
+                        else {
+                            $errorFields[] = new ListModel([$field->get('name')=>$element]);
+                        }
                         $j++;
                     }
                     if ($n !== $j) {
-                        $field = new ListModel(['field'=>$field->getAsArray(), 'value'=>$v, 'n'=>$n, 'j'=>$j, 'element'=>$element, 'found'=>$found]);
+                        $field = new ListModel(['field'=>$errorFields, 'value'=>$v, 'n'=>$n, 'j'=>$j, 'element'=>$element, 'found'=>$found]);
                         self::throwError($field);
                     }
                 }

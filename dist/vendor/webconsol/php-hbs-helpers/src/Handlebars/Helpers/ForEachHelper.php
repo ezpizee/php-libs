@@ -39,6 +39,7 @@ class ForEachHelper implements Helper
             foreach ($tmp as $key => $var) {
                 $specialVariables = array(
                     '@size'          => $size,
+                    '@iterator'      => $index + 1,
                     '@index'         => $index,
                     '@first'         => ($index === 0),
                     '@last'          => ($index === $lastIndex),

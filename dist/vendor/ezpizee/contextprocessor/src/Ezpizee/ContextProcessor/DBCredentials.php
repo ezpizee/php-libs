@@ -7,17 +7,19 @@ use PDO;
 
 class DBCredentials implements JsonSerializable
 {
-    public $dsn;
-    public $driver;
-    public $host;
-    public $port;
-    public $charset = 'utf8';
-    public $username;
-    public $password;
-    public $dbName;
-    public $prefix;
-    public $collate = 'utf8_unicode_ci';
-    public $options = null;
+    public string   $dsn            = '';
+    public string   $driver         = '';
+    public string   $host           = '';
+    public string   $port           = '';
+    public string   $charset        = 'utf8';
+    public string   $username       = '';
+    public string   $password       = '';
+    public string   $dbName         = '';
+    public string   $prefix         = '';
+    public string   $service_name   = '';
+    public string   $oracle_region  = '';
+    public string   $collate        = 'utf8';
+    public array    $options        = [];
 
     public function __construct(array $config)
     {
@@ -80,6 +82,14 @@ class DBCredentials implements JsonSerializable
             $this->dbName = '';
         }
 
+        if (isset($config['service_name'])) {
+            $this->service_name = $config['service_name'];
+        }
+
+        if (isset($config['oracle_region'])) {
+            $this->oracle_region = $config['oracle_region'];
+        }
+
         if (isset($config['prefix'])) {
             $this->prefix = $config['prefix'];
         }
@@ -97,70 +107,80 @@ class DBCredentials implements JsonSerializable
             $this->setOptions();
         }
 
+        if (defined('MYSQL_ATTR_SSL_CA')) {
+            if (empty($this->options)) {
+                $this->options = [];
+            }
+            $this->options[PDO::MYSQL_ATTR_SSL_CA] = MYSQL_ATTR_SSL_CA;
+            $this->options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+        }
+
         $this->setDSN();
     }
 
-    private function setDSN()
-    : void
+    private function setDSN(): void
     {
         if ($this->driver && $this->host) {
             $this->fetchDriver();
-            $this->dsn = $this->driver . ':host=' . $this->host .
-                ($this->port ? ';port=' . $this->port : '') .
-                ($this->dbName ? ';dbname=' . $this->dbName : '') .
-                ($this->charset ? ';charset=' . $this->charset : '');
+            if ($this->driver === 'oracle_oci') {
+                $dsn = '(description= (retry_count=2)(retry_delay=1)(address=(protocol=tcps)(port=${port})(host=${host}))'.
+                    '(connect_data=(service_name=${service_name}))'.
+                    '(security=(ssl_server_cert_dn="CN=${host}, OU=${oracle_region}, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))';
+                $this->dsn = str_replace(
+                    ['${port}', '${host}', '${service_name}', '${oracle_region}'],
+                    [$this->port, $this->host, $this->service_name, $this->oracle_region],
+                    $dsn);
+            }
+            else {
+                $this->dsn = $this->driver . ':host=' . $this->host .
+                    ($this->port ? ';port=' . $this->port : '') .
+                    ($this->dbName ? ';dbname=' . $this->dbName : '') .
+                    ($this->charset ? ';charset=' . $this->charset : '');
+            }
         }
     }
 
-    private function fetchDriver()
+    private function fetchDriver(): void
     {
         if ($this->driver === 'pdomysql' || $this->driver === 'pdo_mysql' || $this->driver === 'mysqli') {
             $this->driver = 'mysql';
         }
     }
 
-    private function setOptions()
-    : void
+    private function setOptions(): void
     {
         if ($this->collate) {
             if ($this->driver === 'mysql') {
-                $this->options = [
+                $this->options = array($this->options, [
                     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_PERSISTENT         => false,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . $this->charset . " COLLATE " . $this->collate
-                ];
+                ]);
             }
         }
     }
 
-    public function isValid()
-    : bool
-    {
-        return $this->dsn && $this->username && $this->password;
-    }
+    public function isValid(): bool {return $this->dsn && $this->username && $this->password;}
 
-    public function __toString()
-    : string
-    {
-        return json_encode($this->jsonSerialize());
-    }
-
-    public function jsonSerialize()
-    : array
+    public function jsonSerialize(): array
     {
         return [
-            'dsn'      => $this->dsn,
-            'driver'   => $this->driver,
-            'host'     => $this->host,
-            'port'     => $this->port,
-            'charset'  => $this->charset,
-            'username' => $this->username,
-            'password' => $this->password,
-            'dbname'   => $this->dbName,
-            'prefix'   => $this->prefix,
-            'collate'  => $this->collate,
-            'options'  => $this->options
+            'dsn'               => $this->dsn,
+            'driver'            => $this->driver,
+            'host'              => $this->host,
+            'port'              => $this->port,
+            'charset'           => $this->charset,
+            'username'          => $this->username,
+            'password'          => $this->password,
+            'dbname'            => $this->dbName,
+            'prefix'            => $this->prefix,
+            'service_name'      => $this->service_name,
+            'oracle_region'     => $this->oracle_region,
+            'collate'           => $this->collate,
+            'options'           => $this->options
         ];
     }
+
+    public function __toString(): string {return json_encode($this->jsonSerialize());}
 }

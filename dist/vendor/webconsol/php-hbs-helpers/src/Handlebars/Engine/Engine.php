@@ -3,6 +3,7 @@
 namespace Handlebars\Engine;
 
 use Handlebars\Handlebars;
+use Handlebars\Processors\Processor;
 
 class Engine extends Handlebars
 {
@@ -19,8 +20,14 @@ class Engine extends Handlebars
         }
         $processor = '\\Handlebars\\Processors\\'.Hbs::getProcessor();
         $processor = new $processor();
-        if (method_exists($processor, 'process')) {
+        if ($processor instanceof Processor && method_exists($processor, 'process')) {
             $processor->process($template, $context);
+            $inlinePartials = $processor->getInlinePartials();
+            if (sizeof($inlinePartials)) {
+                foreach ($inlinePartials as $partialName => $src) {
+                    $this->registerPartial($partialName, $src);
+                }
+            }
         }
         return $this->loadTemplate($template)->render(new Context($context));
     }

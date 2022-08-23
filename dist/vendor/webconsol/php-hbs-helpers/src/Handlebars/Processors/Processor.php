@@ -9,13 +9,16 @@ use Handlebars\Utils\StringUtil;
 
 class Processor
 {
-    protected static $ignoreList = [];
-    protected $tmpl = '';
-    protected $context = [];
+    protected static array $ignoreList = [];
+    protected string $tmpl = '';
+    protected array $context = [];
+    protected array $inlinePartials = [];
 
     public function __construct() {}
 
-    public function process(string &$tmpl, array $context): void {}
+    public function process(string &$tmpl, array $context): void {self::registerInlinePartial($tmpl, $this->inlinePartials);}
+
+    public function getInlinePartials(): array { return $this->inlinePartials; }
 
     public static final function processHref(string &$tmpl, array $context)
     : void
@@ -143,4 +146,25 @@ class Processor
             }
         }
     }
+
+    private static function registerInlinePartial(string &$tmpl, array &$inlinePartials): void
+    {
+        if (strpos($tmpl, '{{#*inline "') !== false && strpos($tmpl, '{{/inline}}') !== false) {
+            $exp = explode('{{/inline}}', $tmpl);
+            foreach ($exp as $item) {
+                $e2 = explode('{{#*inline "', $item);
+                if (sizeof($e2) > 1) {
+                    $e3 = explode('"', $e2[1]);
+                    if (sizeof($e3) > 1) {
+                        $partialName = $e3[0];
+                        $token = '{{#*inline "'.$partialName.'"}}';
+                        $src = str_replace($token, '', '{{#*inline "' . $e2[1]);
+                        $tmpl = str_replace($token.$src.'{{/inline}}', '', $tmpl);
+                        $inlinePartials[$partialName] = $src;
+                    }
+                }
+            }
+        }
+    }
+
 }

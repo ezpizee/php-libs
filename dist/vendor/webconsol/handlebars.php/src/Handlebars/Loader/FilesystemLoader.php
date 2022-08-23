@@ -42,6 +42,7 @@ use RuntimeException;
  */
 class FilesystemLoader implements Loader
 {
+    private static $tmplDir = '';
     protected $baseDir;
     private $_extension = '.handlebars';
     private $_prefix = '';
@@ -67,6 +68,10 @@ class FilesystemLoader implements Loader
         $this->setBaseDir($baseDirs);
         $this->handleOptions($options);
     }
+
+    public static function getTmplDir(): string {return self::$tmplDir;}
+    public static function setTmplDir($path): void {self::$tmplDir = $path;}
+    public static function resetTmplDir(): void {self::$tmplDir = '';}
 
     /**
      * Sets directories to load templates from
@@ -142,7 +147,24 @@ class FilesystemLoader implements Loader
     public function load($name)
     {
         if (!isset($this->_templates[$name])) {
-            $this->_templates[$name] = $this->loadFile($name);
+            if (empty(pathinfo($name, PATHINFO_EXTENSION))) {
+                $found = false;
+                foreach ($this->baseDir as $baseDir) {
+                    $found = file_exists($baseDir.DIRECTORY_SEPARATOR.$name.$this->_extension);
+                    if ($found) {
+                        $this->_templates[$name] = $this->loadFile($name);
+                        break;
+                    }
+                }
+                if ($found === false) {
+                    $src = $name;
+                    $name = md5($name);
+                    $this->_templates[$name] = $src;
+                }
+            }
+            else {
+                $this->_templates[$name] = $this->loadFile($name);
+            }
         }
 
         return new StringWrapper($this->_templates[$name]);

@@ -11,7 +11,6 @@ class Hbs
     protected static $tokens = ['{{', '}}'];
     protected static $processor = 'Processor';
     protected static $ext = '.hbs';
-    private static $tmplDir = '';
     private static $globalContext = [];
     private static $renderFile = '';
 
@@ -49,11 +48,7 @@ class Hbs
         }
     }
 
-    public final static function setTmplDir(string $d)
-    : void
-    {
-        self::$tmplDir = $d;
-    }
+    public final static function setTmplDir(string $d): void {PartialLoader::setTmplDir($d);}
 
     public static function render(string $tmpl, array $context, string $layoutDir = '', array $options = array())
     : string
@@ -69,33 +64,31 @@ class Hbs
             $hbsTmpl = $tmpl;
         }
         if (!empty($layoutDir)) {
-            self::$tmplDir = $layoutDir;
+            PartialLoader::setTmplDir($layoutDir);
         }
 
         if (empty($options)) {
             $options = [
-                'partials_loader' => new PartialLoader(
-                    (self::$tmplDir ? self::$tmplDir : $layoutDir),
-                    ['extension' => self::$ext]
-                )
+                'partials_loader' => new PartialLoader(PartialLoader::getTmplDir(), ['extension' => self::$ext])
             ];
         }
         $context = array_merge(self::$globalContext, $context);
         $engine = new Engine($options);
         $responseContent = $engine->render($hbsTmpl, $context);
         unset($engine, $options);
+        PartialLoader::resetTmplDir();
         return $responseContent;
     }
 
-    public static function getTmplDir(): string {return self::$tmplDir;}
+    public static function getTmplDir(): string {return PartialLoader::getTmplDir();}
 
     public static function absPartialPath(string $partial)
     : string
     {
         $ds = DIRECTORY_SEPARATOR;
-        $file = str_replace([$ds.$ds, $ds.$ds.$ds], $ds, self::$tmplDir.'/'.$partial).self::$ext;
+        $file = str_replace([$ds.$ds, $ds.$ds.$ds], $ds, PartialLoader::getTmplDir().'/'.$partial).self::$ext;
         if (!file_exists($file)) {
-            $file = str_replace([$ds.$ds, $ds.$ds.$ds], $ds, self::$tmplDir.'/'.$partial);
+            $file = str_replace([$ds.$ds, $ds.$ds.$ds], $ds, PartialLoader::getTmplDir().'/'.$partial);
             $file = $file.$ds.pathinfo($file, PATHINFO_FILENAME).self::$ext;
         }
         return $file;
@@ -106,7 +99,7 @@ class Hbs
     {
         $ds = DIRECTORY_SEPARATOR;
         $dot = '.';
-        $file = self::$tmplDir.$ds.'bundle'.$ds.str_replace($dot, $ds, $namespace).'.php';
+        $file = PartialLoader::getTmplDir().$ds.'bundle'.$ds.str_replace($dot, $ds, $namespace).'.php';
         $class = str_replace($dot, '\\', $namespace);
         if (file_exists($file)) {
             if (!class_exists($class, false)) {

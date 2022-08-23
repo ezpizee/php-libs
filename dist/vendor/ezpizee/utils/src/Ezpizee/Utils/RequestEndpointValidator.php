@@ -2,6 +2,9 @@
 
 namespace Ezpizee\Utils;
 
+use FastRoute\Dispatcher;
+use RuntimeException;
+
 final class RequestEndpointValidator
 {
     private static $endpoints = [];
@@ -12,7 +15,7 @@ final class RequestEndpointValidator
 
     private function __construct() {}
 
-    public static function validate(string $uri, $data = null, $method = 'GET')
+    public static function validate(string $uri, $data = null, $method = 'GET', bool $stopOnError = true)
     : void
     {
         self::$method = $method;
@@ -24,7 +27,7 @@ final class RequestEndpointValidator
             }
         }
         self::loadEndpointsFromConfig($data, $merge);
-        self::validateUri($uri);
+        self::validateUri($uri, $stopOnError);
     }
 
     private static function loadEndpointsFromConfig($data, bool $merge)
@@ -53,23 +56,57 @@ final class RequestEndpointValidator
         }
     }
 
-    private static function validateUri(string $uri)
+    private static function validateUri(string $uri, bool $stopOnError = true)
     : bool
     {
-        foreach (self::$endpoints as $endpoint => $cp) {
-            if (!is_string($cp)) {
-                if (self::$method === null) {
-                    $cp = 'EzpzDummyCP';
+        $dispatcher = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
+            foreach (self::$endpoints as $endpoint => $cp) {
+                if (is_string($cp)) {
+                    if (self::$method === null) {
+                        self::$method = 'GET';
+                    }
+                    $r->addRoute(self::$method, $endpoint, $cp);
                 }
-                else {
-                    $cp = isset($cp[self::$method]) ? $cp[self::$method] : null;
+                else if (is_array($cp)) {
+                    if (self::$method === null) {
+                        if (isset($cp['GET'])) {
+                            self::$method = 'GET';
+                        }
+                        else if (isset($cp['POST'])) {
+                            self::$method = 'POST';
+                        }
+                        else if (isset($cp['PUT'])) {
+                            self::$method = 'PUT';
+                        }
+                        else if (isset($cp['DELETE'])) {
+                            self::$method = 'DELETE';
+                        }
+                    }
+                    if (self::$method && isset($cp[self::$method])) {
+                        $r->addRoute(self::$method, $endpoint, $cp[self::$method]);
+                    }
                 }
             }
-            if (PathUtil::isUriMatch($endpoint, $uri) && $cp) {
-                self::$contextProcessorNamespace = $cp . '\\ContextProcessor';
-                self::$uriParams = PathUtil::getUriArgs($endpoint, $uri);
+        });
+
+        // Fetch method and URI from somewhere
+        $routeInfo = $dispatcher->dispatch(self::$method, $uri);
+        switch ($routeInfo[0]) {
+            case Dispatcher::NOT_FOUND:
+                if ($stopOnError) {
+                    throw new RuntimeException(ResponseCodes::MESSAGE_ERROR_ITEM_NOT_FOUND, 404);
+                }
+                break;
+            case Dispatcher::METHOD_NOT_ALLOWED:
+                if ($stopOnError) {
+                    throw new RuntimeException(ResponseCodes::MESSAGE_ERROR_METHOD_NOT_ALLOWED,
+                        ResponseCodes::CODE_METHOD_NOT_ALLOWED);
+                }
+                break;
+            case Dispatcher::FOUND:
+                self::$contextProcessorNamespace = $routeInfo[1] . '\\ContextProcessor';
+                self::$uriParams = $routeInfo[2];
                 return true;
-            }
         }
         return false;
     }

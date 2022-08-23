@@ -181,15 +181,7 @@ class ClientlibManager
         if ($this->isStyle) {
             $style = $this->dirPath . DS . 'css.txt';
             if (file_exists($style)) {
-                $styles = explode("\n", file_get_contents($style));
-                foreach ($styles as $file) {
-                    if (trim($file)) {
-                        $file = $this->dirPath . DS . trim($file);
-                        if (file_exists($file)) {
-                            $this->files[] = $file;
-                        }
-                    }
-                }
+                $this->fetchFilesBy($this->dirPath, 'css', 'txt');
             }
             else {
                 if (file_exists($this->dirPath . DS . 'style')) {
@@ -203,15 +195,7 @@ class ClientlibManager
         else if ($this->isScript) {
             $script = $this->dirPath . DS . 'js.txt';
             if (file_exists($script)) {
-                $scripts = explode("\n", file_get_contents($script));
-                foreach ($scripts as $file) {
-                    if (trim($file)) {
-                        $file = $this->dirPath . DS . trim($file);
-                        if (file_exists($file)) {
-                            $this->files[] = $file;
-                        }
-                    }
-                }
+                $this->fetchFilesBy($this->dirPath, 'js', 'txt');
             }
             else {
                 if (file_exists($this->dirPath . DS . 'script')) {
@@ -275,7 +259,7 @@ class ClientlibManager
 
                 if (!empty($hbs)) {
                     $this->renderHBSTemplatesFromList(
-                        $hbs, '(EzpzStoreFront||Ezpz).hbs.set("%s",(EzpzStoreFront||Ezpz).utils.base64Decode("%s"));', $htmlBuffer
+                        $hbs, '${js_namespace}.hbs.set("%s",${js_namespace}.utils.base64Decode("%s"));', $htmlBuffer
                     );
                 }
 
@@ -341,6 +325,26 @@ class ClientlibManager
             foreach ($list as $item) {
                 $name = pathinfo($item, PATHINFO_FILENAME);
                 $buffer[] = sprintf($format, $name, base64_encode(file_get_contents($item)));
+            }
+        }
+    }
+
+    private function fetchFilesBy(string $dir, string $filename, string $ext)
+    {
+        $scripts = explode("\n", file_get_contents($dir.DS.$filename.'.'.$ext));
+        foreach ($scripts as $file) {
+            if (trim($file)) {
+                $file = $dir . DS . trim($file);
+                if (file_exists($file)) {
+                    if (pathinfo($file, PATHINFO_FILENAME) === $filename &&
+                        pathinfo($file, PATHINFO_EXTENSION) === $ext) {
+                        $d = dirname($file);
+                        $this->fetchFilesBy($d, $filename, $ext);
+                    }
+                    else {
+                        $this->files[] = $file;
+                    }
+                }
             }
         }
     }

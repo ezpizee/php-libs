@@ -15,59 +15,54 @@ use RuntimeException;
 
 abstract class Base
 {
-    /**
-     * @var DBO
-     */
-    protected $connection;
-    /**
-     * The connection to the ezpz_user database
-     *
-     * @var DBO
-     */
-    protected $systemConnection;
-    /**
-     * Used for setting data to send to microservice messaging service
-     *
-     * @var array
-     */
-    protected $dataForMessagingService = [];
-
-    private static $serviceName = '';
-
-    protected $context = [
+    /** @var DBO $connection */
+    protected DBO $connection;
+    /** @var DBO $systemConnection */
+    protected DBO $systemConnection;
+    /** @var array $dataForMessagingService */
+    protected array $dataForMessagingService = [];
+    /** @var string $serviceName */
+    private static string $serviceName = '';
+    /** @var array $context */
+    protected array $context = [
         'status'  => 'OK',
         'message' => 'SUCCESS',
         'code'    => 200,
         'data'    => null,
-        'debug'   => null
+        'total'   => 0,
+        'debug'   => null,
+        'queries' => [],
+        'errors'  => null
     ];
-
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    protected $requestData = [];
-
-    protected $requiredFieldsConfigData = [];
-
-    protected $isAllRequiredFieldsValid = false;
-
-    protected $timestampNow = 0;
-    protected $hasFormSubmission = false;
-
+    /** @var Request $request */
+    protected Request $request;
+    /** @var array $requestData */
+    protected array $requestData = [];
+    /** @var array $requiredFieldsConfigData */
+    protected array $requiredFieldsConfigData = [];
+    /** @var bool $isAllRequiredFieldsValid */
+    protected bool $isAllRequiredFieldsValid = false;
+    /** @var int $timestampNow */
+    protected int $timestampNow = 0;
+    /** @var bool $hasFormSubmission */
+    protected bool $hasFormSubmission = false;
+    /** @var array $uriParams */
+    protected array $uriParams = [];
+    /** constructor */
     public function __construct() {}
 
-    /**
-     * @param DBOContainer $em
-     */
-    protected final function setEntityManager(DBOContainer $em)
-    : void
+    /** @param DBOContainer $em */
+    protected final function setEntityManager(DBOContainer $em): void
     {
         $this->timestampNow = strtotime('now');
-        $this->systemConnection = $em->getConnection();
+        if ($em->isConnected()) {
+            $this->systemConnection = $em->getConnection();
+        }
+        else {
+            $this->systemConnection = new DBO(new DBCredentials([]));
+        }
         $this->connection = $this->systemConnection;
-        $this->hasFormSubmission = $this->request->method()==='POST' && !empty($this->request->getRequestParamsAsArray());
+        $this->hasFormSubmission = ($this->request->method()==='POST' || $this->request->method()==='PUT') && !empty($this->request->getRequestParamsAsArray());
     }
 
     /**
@@ -86,8 +81,7 @@ abstract class Base
 
     public static final function getServiceName(): string{return self::$serviceName;}
 
-    public final function getContext()
-    : array
+    public final function getContext(): array
     {
         $this->preProcessContext();
 
@@ -121,11 +115,15 @@ abstract class Base
                             }
                         }
                         else {
+                            $this->beforeProcessContext();
                             $this->processContext();
+                            $this->afterProcessContext();
                         }
                     }
                     else {
+                        $this->beforeProcessContext();
                         $this->processContext();
+                        $this->afterProcessContext();
                     }
                 }
                 else {
@@ -153,29 +151,17 @@ abstract class Base
 
     public final function setContext(array $context): void{$this->context = $context;}
 
-    abstract protected function allowedMethods()
-    : array;
-
-    abstract protected function requiredAccessToken()
-    : bool;
-
-    abstract protected function isValidAccessToken()
-    : bool;
-
-    abstract protected function validRequiredParams()
-    : bool;
-
-    abstract protected function isSystemUserOnly()
-    : bool;
-
-    abstract protected function isSystemUser(string $user, string $pwd)
-    : bool;
-
-    public final function setContextDebug($debug): void {$this->context['debug'] = $debug;}
+    abstract public function allowedMethods(): array;
+    abstract public function requiredAccessToken(): bool;
+    abstract public function validRequiredParams(): bool;
+    abstract public function isSystemUserOnly(): bool;
+    abstract public function beforeProcessContext(): void;
+    abstract public function afterProcessContext(): void;
+    abstract public function isValidAccessToken(): bool;
+    abstract public function isSystemUser(string $user, string $pwd): bool;
+    abstract public function processContext(): void;
 
     protected function preProcessContext(): void {}
-
-    abstract public function processContext(): void;
 
     protected function postProcessContext(): void {}
 
@@ -187,35 +173,25 @@ abstract class Base
         $this->requestData = $request->getRequestParamsAsArray();
     }
 
-    public final function setRequestData(array $data): void{$this->requestData = $data;}
+    public final function setRequestData(array $data): void {$this->requestData = $data;}
 
-    public final function setContextData(array $data): void{$this->context['data'] = $data;}
+    public final function setContextStatus(string $status): void {$this->context['status'] = $status;}
+    public final function setContextMessage(string $msg): void {$this->context['message'] = $msg;}
+    public final function setContextCode(int $code): void {$this->context['code'] = $code;}
+    public final function setContextData(array $data): void {$this->context['data'] = $data;}
+    public final function setContextTotal(int $n): void {$this->context['total'] = $n;}
+    public final function setContextDebug($debug): void {$this->context['debug'] = $debug;}
+    public final function setContextQueries(array $queries): void {$this->context['queries'] = $queries;}
+    public final function setContextErrors($errors): void {$this->context['errors'] = $errors;}
 
-    public final function setContextStatus(string $status): void{$this->context['status'] = $status;}
-
-    public final function setContextCode(int $code): void{$this->context['code'] = $code;}
-
-    public final function setContextMessage(string $msg): void{$this->context['message'] = $msg;}
-
-    public final function getContextCode()
-    : int
-    {
-        return is_string($this->context['code']) ? (int)$this->context['code'] : $this->context['code'];
-    }
-
-    public final function getContextMessage(): string{return $this->context['message'];}
-
-    public final function getContextData()
-    : array
-    {
-        return empty($this->context['data']) ? [] : $this->context['data'];
-    }
-
-    public final function getContextDebug()
-    : array
-    {
-        return empty($this->context['debug']) ? [] : $this->context['debug'];
-    }
+    public final function getContextStatus(): string {return $this->context['status'];}
+    public final function getContextMessage(): string {return $this->context['message'];}
+    public final function getContextCode(): int {return is_string($this->context['code']) ? (int)$this->context['code'] : $this->context['code'];}
+    public final function getContextData(): array {return $this->context['data'] ?? [];}
+    public final function getContextTotal(): int {return $this->context['total'];}
+    public final function getContextDebug(): array {return $this->context['debug'] ?? [];}
+    public final function getContextQueries(): array {return !empty($this->context['queries']) ? $this->context['queries'] : [];}
+    public final function getContextErrors() {return $this->context['errors'];}
 
     public final function logger($msg, string $type = 'error')
     {
@@ -237,9 +213,7 @@ abstract class Base
         array $headers = array(),
         array $cookies = array(),
         string $bodyContent = '',
-        $response = null
-    )
-    : Response
+        $response = null): Response
     {
         $context = $this->context;
         $context['message'] = 'Should be implemented by sub-class';
@@ -248,7 +222,9 @@ abstract class Base
         return new Response($method, $path, json_encode($context));
     }
 
-    protected final function getUriParam($key): string{return RequestEndpointValidator::getUriParam($key);}
+    public final function setUriParam(array $params): void {$this->uriParams = $params;}
+    public final function addUriParam(string $key, string $value): void {$this->uriParams[$key] = $value;}
+    protected final function getUriParam(string $key): string {return $this->uriParams[$key] ?? RequestEndpointValidator::getUriParam($key);}
 
     /**
      * Allow child class to invoke default fields validator
@@ -262,8 +238,7 @@ abstract class Base
      *
      * @return bool
      */
-    protected final function defaultRequiredParamsValidator(string $configFilePath = '')
-    : bool
+    protected final function defaultRequiredParamsValidator(string $configFilePath = ''): bool
     {
         if (!$configFilePath) {
             $configFilePath = CustomLoader::getDir(get_called_class()) . EZPIZEE_DS. 'required-fields.json';
@@ -303,8 +278,7 @@ abstract class Base
         return $this->isAllRequiredFieldsValid;
     }
 
-    protected final function displayRequiredFields()
-    : void
+    protected final function displayRequiredFields(): void
     {
         if ($this->getRequestData('display') === 'required-fields') {
             header('Content-Type: application/json');
@@ -329,8 +303,7 @@ abstract class Base
         return null;
     }
 
-    private function hasRequestData(string $key)
-    : bool
+    private function hasRequestData(string $key): bool
     {
         if (!empty($this->request)) {
             return $this->request->hasRequestParam($key);
@@ -345,13 +318,12 @@ abstract class Base
     }
 
     /**
-     * @param null $arg
+     * @param string|array|object|null $arg
      * @param string $key
      *
      * @return array
      */
-    protected final function getFieldFromRequiredFields($arg = null, $key = 'name')
-    : array
+    public final function getFieldFromRequiredFields($arg = null, $key = 'name'): array
     {
         $data1 = [];
         $data2 = [];
@@ -383,34 +355,20 @@ abstract class Base
         return $data2;
     }
 
-    public final function closeDBConnection()
-    : void
+    public final function closeDBConnection(): void
     {
         if ($this->connection instanceof DBO && $this->connection->isConnected()) {
             $this->connection->closeConnection();
         }
     }
 
-    protected final function triggerMessagingServiceProducer()
-    : void
+    protected final function triggerMessagingServiceProducer(): void
     {
         if (defined('FIREBASE_INTEGRATED') && FIREBASE_INTEGRATED &&
             method_exists($this, 'sendFirebaseTopic')) {
             $this->sendFirebaseTopic();
         }
-        else if (defined('KAFKA_INTEGRATED') && KAFKA_INTEGRATED &&
-            method_exists($this, 'sendKafkaTopic')) {
-            $this->sendKafkaTopic();
-        }
-        else if (defined('RABBITMQ_INTEGRATED') && RABBITMQ_INTEGRATED &&
-            method_exists($this, 'sendRabbitMQTopic')) {
-            $this->sendRabbitMQTopic();
-        }
     }
 
     protected function sendFirebaseTopic(): void {}
-
-    protected function sendKafkaTopic(): void {}
-
-    protected function sendRabbitMQTopic(): void {}
 }
