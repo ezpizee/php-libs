@@ -86,4 +86,4 @@ id_rsa.pub
 /tmp
 /Dockerfile
 #/src/config
-#/src/test.php
+/src/test.php
